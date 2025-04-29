@@ -13,24 +13,6 @@
   <property name="windowTitle">
    <string>LoginWindow</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>130</y>
-     <width>321</width>
-     <height>131</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>20</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Second Change</string>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections/>
