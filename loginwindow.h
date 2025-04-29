@@ -2,6 +2,8 @@
 #define LOGINWINDOW_H
 
 #include <QDialog>
+#include <QMessageBox>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -9,8 +11,7 @@ class LoginWindow;
 }
 QT_END_NAMESPACE
 
-class LoginWindow : public QDialog
-{
+class LoginWindow : public QDialog {
     Q_OBJECT
 
 public:
@@ -19,5 +20,8 @@ public:
 
 private:
     Ui::LoginWindow *ui;
+private slots:
+    void onLoginButtonClicked();
+    void onRegisterButtonClicked();
 };
 #endif // LOGINWINDOW_H
