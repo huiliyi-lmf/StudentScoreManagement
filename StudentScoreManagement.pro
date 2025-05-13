@@ -1,4 +1,5 @@
 QT       += core gui
+QT       += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -9,11 +10,15 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    DataObjects/admin.cpp \
+    DataObjects/dataobject.cpp \
     main.cpp \
     loginwindow.cpp \
     registerwindow.cpp
 
 HEADERS += \
+    DataObjects/admin.h \
+    DataObjects/dataobject.h \
     loginwindow.h \
     registerwindow.h
 
@@ -25,3 +30,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    tempsql.sql
