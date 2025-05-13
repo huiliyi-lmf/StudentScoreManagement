@@ -10,6 +10,7 @@ LoginWindow::LoginWindow(QWidget *parent)
 }
 
 LoginWindow::~LoginWindow() {
+    delete registerwindow_ui;
     delete ui;
 }
 
@@ -20,10 +21,8 @@ void LoginWindow::onLoginButtonClicked() {
 void LoginWindow::onRegisterButtonClicked() {
     if(!registerwindow_ui)
     {
-        this->setEnabled(false);
         registerwindow_ui= new Registerwindow(this);
-
-
-        registerwindow_ui->show();
     }
+    this->hide();
+    registerwindow_ui->show();
 }

@@ -2,7 +2,6 @@
 #define REGISTERWINDOW_H
 
 #include <QWidget>
-
 #include <QDialog>
 #include <QMessageBox>
 #include <QPushButton>
@@ -11,17 +10,19 @@ namespace Ui {
 class Registerwindow;
 }
 
-class Registerwindow : public QWidget
+class Registerwindow : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Registerwindow(QWidget *parent = nullptr);
+    explicit Registerwindow(QDialog *parent = nullptr);
     ~Registerwindow();
 
 private:
     Ui::Registerwindow *ui;
-    void onRegisterButton_2Clicked();
+    QDialog* parentWindow;
+public slots:
+    void onRegisterButtonClicked();
     void onExitButtonClicked();
 };
 

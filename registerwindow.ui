@@ -37,7 +37,7 @@
        </font>
       </property>
       <property name="text">
-       <string>学生成绩管理系统</string>
+       <string>学生成绩管理系统 注册</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -134,7 +134,7 @@
     <item>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
-       <widget class="QPushButton" name="registerButton_2">
+       <widget class="QPushButton" name="registerButton">
         <property name="font">
          <font>
           <pointsize>20</pointsize>
