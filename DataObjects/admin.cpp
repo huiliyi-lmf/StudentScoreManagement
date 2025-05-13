@@ -17,11 +17,11 @@ bool Admin::insert() {
     // query.addBindValue(userName); // 第一个 ? 替换为 name
     // query.addBindValue(userPwd);
     // query.exec();
-    return query.exec(QString("INSERT INTO %3 (userName, userPwd) values ('%1', '%2')").arg(this->userName).arg(this->userPwd).arg(this->tableName));
+    return query.exec(QString("INSERT INTO %3 (userName, userPwd) values ('%1', '%2')").arg(STDTOQSTR(this->userName)).arg(STDTOQSTR(this->userPwd)).arg(STDTOQSTR(this->tableName)));
 }
 bool Admin::selectById(int id) {
     QSqlQuery query;
-    query.prepare(QString("SELECT * FROM %1 WHERE id = ?").arg(this->tableName));
+    query.prepare(QString("SELECT * FROM %1 WHERE id = ?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
     if (query.exec() && query.next()) {
         this->id = query.value("id").toInt();

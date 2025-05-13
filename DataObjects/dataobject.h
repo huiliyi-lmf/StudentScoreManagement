@@ -8,6 +8,7 @@
 #include <QString>
 
 #define DATABASE_NAME "student.db"
+#define STDTOQSTR(str) QString(std::string(str).c_str())
 
 class DataObject
 {
