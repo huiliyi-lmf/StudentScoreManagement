@@ -33,6 +33,4 @@ public:
     virtual std::vector<DataObject*> selectByQuery(QSqlQuery sql)=0;    // 根据sql条件查询
 };
 
-QSqlDatabase* DataObject::db = nullptr;
-
 #endif // DATAOBJECT_H

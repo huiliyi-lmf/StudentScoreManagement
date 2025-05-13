@@ -1,5 +1,7 @@
 #include "dataobject.h"
 
+QSqlDatabase* DataObject::db = nullptr;
+
 DataObject::DataObject(std::string name) : tableName(name), isDataBaseOpen(false) {
     isDataBaseOpen = DataObject::openDataBase();
 }
@@ -10,6 +12,7 @@ bool DataObject::openDataBase() {
     }
     db = new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"));
     db->setDatabaseName(DATABASE_NAME);
+    db->open();
     return db->isOpen();
 }
 

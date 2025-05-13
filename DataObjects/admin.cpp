@@ -24,9 +24,9 @@ bool Admin::selectById(int id) {
     query.prepare(QString("SELECT * FROM %1 WHERE id = ?").arg(this->tableName));
     query.addBindValue(id);
     if (query.exec() && query.next()) {
-        this->id = query.value("id");
-        this->userName = query.value("userName");
-        this->userPwd = query.value("userPwd");
+        this->id = query.value("id").toInt();
+        this->userName = query.value("userName").toString().toStdString();
+        this->userPwd = query.value("userPwd").toString().toStdString();
         return true;
     } else {
         return false;
