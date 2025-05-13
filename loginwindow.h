@@ -1,6 +1,7 @@
 #ifndef LOGINWINDOW_H
 #define LOGINWINDOW_H
-
+#include<QMainWindow>
+#include"registerwindow.h"
 #include <QDialog>
 #include <QMessageBox>
 #include <QPushButton>
@@ -20,6 +21,7 @@ public:
 
 private:
     Ui::LoginWindow *ui;
+    Registerwindow *registerwindow_ui=nullptr;
 private slots:
     void onLoginButtonClicked();
     void onRegisterButtonClicked();

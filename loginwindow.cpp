@@ -18,5 +18,12 @@ void LoginWindow::onLoginButtonClicked() {
 }
 
 void LoginWindow::onRegisterButtonClicked() {
-    QMessageBox::information(this, "Hello", this->ui->passwordEdit->text());
+    if(!registerwindow_ui)
+    {
+        this->setEnabled(false);
+        registerwindow_ui= new Registerwindow(this);
+
+
+        registerwindow_ui->show();
+    }
 }
