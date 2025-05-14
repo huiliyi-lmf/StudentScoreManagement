@@ -28,7 +28,8 @@ bool Admin::selectById(int id) {
         this->userName = query.value("userName").toString().toStdString();
         this->userPwd = query.value("userPwd").toString().toStdString();
         return true;
-    } else {
+    } 
+    else {
         return false;
     }
 }
@@ -43,6 +44,14 @@ bool Admin::deleteData() {
     //     return false;
     // }
     // return query.numRowsAffected() > 0;
+    QSqlQuery query;
+    query.prepare(QString("DELETE FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
+    query.addBindValue(id);
+    if (!query.exec()) {
+      
+        return false;
+    }
+    return query.numRowsAffected() > 0;
 }
 bool Admin::updateData() {
     // QSqlQuery query;
@@ -57,6 +66,16 @@ bool Admin::updateData() {
     //     return false;
     // }
     // return query.numRowsAffected() > 0; // 确认实际影响了行
+    QSqlQuery query;
+    query.prepare(QString("UPDATE %1 SET userName=?,usrPwd=?WHERE id=?").arg(STDTOQSTR(this->tableName)));
+    query.addBindValue(STDTOQSTR(this->userName));
+    query.addBindValue(STDTOQSTR(this->userPwd));
+    query.addBindValue(this->id);
+    if (!query.exec()) {
+       
+        return false; 
+    }
+    return query.numRowsAffected() > 0;
 }
 std::vector<DataObject*> Admin::selectAll() {
     // QList<QVariantMap> result;
@@ -74,6 +93,18 @@ std::vector<DataObject*> Admin::selectAll() {
     //     qDebug() << "SelectAll error:" << query.lastError().text();
     // }
     // return result;
+    QSqlQuery query;
+    query.exec(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName)));
+    std::vector<DataObject*> result;
+    while (query.next()) {
+        Admin* admin = new Admin();
+        admin->id = query.value("id").toInt();
+        admin->userName = query.value("userName").toString().toStdString();
+        admin->userPwd = query.value("userPwd").toString().toStdString();
+        result.push_back(admin);
+    }
+    return result;
+
 }
 std::vector<DataObject*> Admin::selectByQuery(QSqlQuery sql) {
     return std::vector<DataObject*>();

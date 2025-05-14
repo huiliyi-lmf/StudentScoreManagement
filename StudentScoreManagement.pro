@@ -11,14 +11,24 @@ CONFIG += c++17
 
 SOURCES += \
     DataObjects/admin.cpp \
+    DataObjects/class.cpp \
     DataObjects/dataobject.cpp \
+    DataObjects/grade.cpp \
+    DataObjects/result.cpp \
+    DataObjects/student.cpp \
+    DataObjects/subject.cpp \
     main.cpp \
     loginwindow.cpp \
     registerwindow.cpp
 
 HEADERS += \
     DataObjects/admin.h \
+    DataObjects/class.h \
     DataObjects/dataobject.h \
+    DataObjects/grade.h \
+    DataObjects/result.h \
+    DataObjects/student.h \
+    DataObjects/subject.h \
     loginwindow.h \
     registerwindow.h
 
