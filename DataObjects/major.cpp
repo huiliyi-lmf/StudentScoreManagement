@@ -12,7 +12,7 @@ bool Major::createTable() {
 }
 bool Major::insert() {
     QSqlQuery query;
-    return query.exec(QString("INSERT INTO %1 (id, majorName) values ('%2', '%3')").arg(STDTOQSTR(this->tableName)).arg(id).arg(STDTOQSTR(this->majorName)));
+    return query.exec(QString("INSERT INTO %1 (majorName) values ('%2')").arg(STDTOQSTR(this->tableName)).arg(STDTOQSTR(this->majorName)));
 
 }
 

@@ -7,7 +7,6 @@ class Score:public DataObject
 public:
     int id;
     std::string stuId;
-    int kindId;
     int subId;
     double score;
     Score();

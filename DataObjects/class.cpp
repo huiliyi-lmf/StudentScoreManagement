@@ -15,7 +15,7 @@ bool Class::createTable() {
 
 bool Class::insert() {
    QSqlQuery query;
-   query.prepare(QString("INSERT INTO %1 (id, majorID, className) values ('%2', '%3', '%4')").arg(STDTOQSTR(this->tableName)).arg(id).arg(majorId).arg(STDTOQSTR(this->className)));
+   query.prepare(QString("INSERT INTO %1 (majorID, className) values ('%2', '%3')").arg(STDTOQSTR(this->tableName)).arg(majorId).arg(STDTOQSTR(this->className)));
    return query.exec(); 
 }
 

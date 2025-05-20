@@ -17,6 +17,7 @@ SOURCES += \
     DataObjects/score.cpp \
     DataObjects/student.cpp \
     DataObjects/subject.cpp \
+    dashboard.cpp \
     main.cpp \
     loginwindow.cpp \
     registerwindow.cpp
@@ -29,10 +30,12 @@ HEADERS += \
     DataObjects/score.h \
     DataObjects/student.h \
     DataObjects/subject.h \
+    dashboard.h \
     loginwindow.h \
     registerwindow.h
 
 FORMS += \
+    dashboard.ui \
     loginwindow.ui \
     registerwindow.ui
 
@@ -43,3 +46,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     tempsql.sql
+
+RESOURCES += \
+    rc.qrc

@@ -17,7 +17,6 @@ LoginWindow::~LoginWindow() {
 
 void LoginWindow::onLoginButtonClicked() {
 
-    QMessageBox::information(this, "Hello", this->ui->userNameEdit->text());
 }
 
 void LoginWindow::onRegisterButtonClicked() {

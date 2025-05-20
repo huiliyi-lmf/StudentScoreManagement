@@ -13,8 +13,7 @@ bool Admin::createTable() {
 }
 bool Admin::insert() {
     QSqlQuery query;
-    query.prepare(QString("INSERT INTO %1 (id,userName,userPwd) VALUES (?,?)").arg(STDTOQSTR(this->tableName)));
-    query.addBindValue(this->id);
+    query.prepare(QString("INSERT INTO %1 (userName,userPwd) VALUES (?,?)").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(this->userName));
     query.addBindValue(STDTOQSTR(this->userPwd));
     if (!query.exec()) {
@@ -50,7 +49,7 @@ bool Admin::deleteData() {
 bool Admin::updateData() {
 
     QSqlQuery query;
-    query.prepare(QString("UPDATE %1 SET userName=?,usrPwd=?WHERE id=?").arg(STDTOQSTR(this->tableName)));
+    query.prepare(QString("UPDATE %1 SET userName=?,usrPwd=? WHERE id=?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(this->userName));
     query.addBindValue(STDTOQSTR(this->userPwd));
     query.addBindValue(this->id);

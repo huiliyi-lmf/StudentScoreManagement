@@ -7,7 +7,6 @@ bool Score::createTable() {
     return query.exec("CREATE TABLE IF NOT EXISTS `score`  ("
   "`id` int(11) NOT NULL,"
   "`stuId` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
-  "`kindId` int(11) NOT NULL,"
   "`subId` int(11) NOT NULL,"
   "`score` double NOT NULL,"
  " PRIMARY KEY (`id`) USING BTREE"
@@ -16,10 +15,8 @@ bool Score::createTable() {
 }
 bool Score::insert() {
     QSqlQuery query;
-    query.prepare(QString("INSERT INTO %1 (id,stuId,kindId,subId,score) values(?,?,?,?,?)").arg(STDTOQSTR(this->tableName)));
-    query.addBindValue(id);
+    query.prepare(QString("INSERT INTO %1 (stuId,subId,score) values(?,?,?)").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(stuId)); 
-    query.addBindValue(kindId); 
     query.addBindValue(subId); 
     query.addBindValue(score);
     return query.exec();
@@ -32,7 +29,6 @@ bool Score::selectById(int id) {
     if (query.exec() && query.next()) {
         this->id = query.value("id").toInt();
         this->stuId = query.value("stuId").toString().toStdString(); 
-        this->kindId = query.value("kindId").toInt();
         this->subId = query.value("subId").toInt(); 
         this->score = query.value("score").toDouble();
         return true;
@@ -52,9 +48,8 @@ bool Score::deleteData() {
 }
 bool Score::updateData() {
     QSqlQuery query;
-    query.prepare(QString("UPDATE %1 SET stuId=?,kindId=?,subId=?,score=? WHERE id=?").arg(STDTOQSTR(this->tableName)));
+    query.prepare(QString("UPDATE %1 SET stuId=?,subId=?,score=? WHERE id=?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(stuId)); 
-    query.addBindValue(kindId);
     query.addBindValue(subId); 
     query.addBindValue(score);
     query.addBindValue(id);
@@ -71,7 +66,6 @@ std::vector<DataObject*> Score::selectAll() {
         Score* score = new Score();
         score->id = query.value("id").toInt();
         score->stuId = query.value("stuId").toString().toStdString();
-        score->kindId = query.value("kindId").toInt();
         score->subId = query.value("subId").toInt();
         score->score = query.value("score").toDouble();
         scores.push_back(score);
