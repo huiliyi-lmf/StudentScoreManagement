@@ -2,7 +2,7 @@
 
 Student::Student():DataObject("Student") {}
 bool Student::createTable() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     return query.exec("CREATE TABLE IF NOT EXISTS `student`  ("
   "`id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
   "`stuName` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
@@ -17,7 +17,7 @@ bool Student::createTable() {
 
 }
 bool Student::insert() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare("INSERT INTO `student` (`id`, `stuName`, `classID`, `gradeID`, `age`, `sex`, `nation`, `address`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     query.addBindValue(id);
     query.addBindValue(STDTOQSTR(stuName));
@@ -30,7 +30,7 @@ bool Student::insert() {
     return query.exec();
 }
 bool Student::selectById(int id) {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1 WHERE `id` = ?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
     if (query.exec() && query.next()) {
@@ -47,7 +47,7 @@ bool Student::selectById(int id) {
     return false;
 }
 bool Student::deleteData() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("DELETE FROM %1 WHERE `id` =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
     if(!query.exec()){
@@ -57,7 +57,7 @@ bool Student::deleteData() {
 
 }
 bool Student::updateData() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("UPDATE %1 SET `stuName` =?, `classID` =?, `gradeID` =?, `age` =?, `sex` =?, `nation` =?, `address` =? WHERE `id` =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(stuName));
     query.addBindValue(classID);
@@ -74,7 +74,7 @@ bool Student::updateData() {
 
 }
 std::vector<DataObject*> Student::selectAll() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
      query.exec(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName)));
     std::vector<DataObject*> students;
     while (query.next()) {

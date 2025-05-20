@@ -3,7 +3,7 @@
 Subject::Subject():DataObject("Subject") {}
 bool Subject::createTable() 
 {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
    return query.exec("CREATE TABLE IF NOT EXISTS `subject`  ("
   "`id` int(11) NOT NULL,"
   "`subName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
@@ -12,7 +12,7 @@ bool Subject::createTable()
 }
 bool Subject::insert() 
 {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("INSERT INTO %1 ( `subName`) VALUES (?)").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(subName));
     return query.exec();
@@ -20,7 +20,7 @@ bool Subject::insert()
 
 bool Subject::selectById(int id)
 {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
     if (query.exec() && query.next()) {
@@ -34,7 +34,7 @@ bool Subject::selectById(int id)
 }
 bool Subject::deleteData()
 {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("DELETE FROM %1 WHERE id=?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
     if (!query.exec()) {
@@ -44,7 +44,7 @@ bool Subject::deleteData()
 }
 bool Subject::updateData()
 {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("UPDATE %1 SET subName =? WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(subName));
     query.addBindValue(id);
@@ -56,7 +56,7 @@ bool Subject::updateData()
 std::vector<DataObject*> Subject::selectAll()
 {
     std::vector<DataObject*> subjects;
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.exec(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName)));
     while (query.next()) {
         Subject* subject = new Subject();

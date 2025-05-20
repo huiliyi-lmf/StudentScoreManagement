@@ -2,7 +2,7 @@
 
 Class::Class():DataObject("Class") {}
 bool Class::createTable() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     return query.exec("CREATE TABLE IF NOT EXISTS `class`  ("
   "`id` int(11) NOT NULL,"
  " `majorId` int(11) NOT NULL,"
@@ -14,13 +14,13 @@ bool Class::createTable() {
 }
 
 bool Class::insert() {
-   QSqlQuery query;
+   QSqlQuery query(*this->db);
    query.prepare(QString("INSERT INTO %1 (majorID, className) values ('%2', '%3')").arg(STDTOQSTR(this->tableName)).arg(majorId).arg(STDTOQSTR(this->className)));
    return query.exec(); 
 }
 
 bool Class::selectById(int id) {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id); 
     if(query.exec() && query.next()) {
@@ -34,7 +34,7 @@ bool Class::selectById(int id) {
     }
 }
 bool Class::deleteData() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("DELETE FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
     if(!query.exec()) {
@@ -43,7 +43,7 @@ bool Class::deleteData() {
     return query.numRowsAffected() > 0;
 }
 bool Class::updateData() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("UPDATE %1 SET majorID =?, className =? WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(majorId);
     query.addBindValue(STDTOQSTR(className));
@@ -56,7 +56,7 @@ bool Class::updateData() {
 }
 
 std::vector<DataObject*> Class::selectAll() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName))); 
     std::vector<DataObject*> result;
     if(query.exec()) {

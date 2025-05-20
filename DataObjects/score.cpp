@@ -3,7 +3,7 @@
 Score::Score():DataObject("Score") {}
 
 bool Score::createTable() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     return query.exec("CREATE TABLE IF NOT EXISTS `score`  ("
   "`id` int(11) NOT NULL,"
   "`stuId` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
@@ -14,7 +14,7 @@ bool Score::createTable() {
 
 }
 bool Score::insert() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("INSERT INTO %1 (stuId,subId,score) values(?,?,?)").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(stuId)); 
     query.addBindValue(subId); 
@@ -23,7 +23,7 @@ bool Score::insert() {
 
 }
 bool Score::selectById(int id) {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
     if (query.exec() && query.next()) {
@@ -38,7 +38,7 @@ bool Score::selectById(int id) {
     }
 }
 bool Score::deleteData() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("DELETE FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
     if (!query.exec()) {
@@ -47,7 +47,7 @@ bool Score::deleteData() {
     return query.numRowsAffected() > 0;
 }
 bool Score::updateData() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("UPDATE %1 SET stuId=?,subId=?,score=? WHERE id=?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(stuId)); 
     query.addBindValue(subId); 
@@ -60,7 +60,7 @@ bool Score::updateData() {
 }
 std::vector<DataObject*> Score::selectAll() {
     std::vector<DataObject*> scores;
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName))); 
     while(query.next()) {
         Score* score = new Score();
