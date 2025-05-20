@@ -1,16 +1,16 @@
-#ifndef RESULT_H
-#define RESULT_H
+#ifndef SCORE_H
+#define SCORE_H
 #include"dataobject.h"
 #include <QSqlQuery>
-class Result:public DataObject
+class Score:public DataObject
 {
 public:
-    int ID;
+    int id;
     std::string stuId;
     int kindId;
     int subId;
-    double result;
-    Result();
+    double score;
+    Score();
     bool createTable() override;    //创建表
     bool insert() override;         //插入数据
     bool selectById(int id) override;//根据id查询数据
@@ -20,4 +20,4 @@ public:
     std::vector<DataObject*> selectByQuery(QSqlQuery sql) override;//根据查询语句查询数据
 };
 
-#endif // RESULT_H
+#endif // SCORE_H

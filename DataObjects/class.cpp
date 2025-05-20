@@ -4,10 +4,10 @@ Class::Class():DataObject("Class") {}
 bool Class::createTable() {
     QSqlQuery query;
     return query.exec("CREATE TABLE IF NOT EXISTS `class`  ("
-  "`classId` int(11) NOT NULL,"
- " `gradeId` int(11) NOT NULL,"
+  "`id` int(11) NOT NULL,"
+ " `majorId` int(11) NOT NULL,"
   "`className` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
- " PRIMARY KEY (`classID`) USING BTREE"
+ " PRIMARY KEY (`id`) USING BTREE"
 ") ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;"
                       );
 
@@ -15,18 +15,19 @@ bool Class::createTable() {
 
 bool Class::insert() {
    QSqlQuery query;
-   query.prepare(QString("INSERT INTO %1 (classID, gradeID, className) values ('%2', '%3', '%4')").arg(STDTOQSTR(this->tableName)).arg(classId).arg(gradeId).arg(STDTOQSTR(this->className)));
+   query.prepare(QString("INSERT INTO %1 (id, majorID, className) values ('%2', '%3', '%4')").arg(STDTOQSTR(this->tableName)).arg(id).arg(majorId).arg(STDTOQSTR(this->className)));
    return query.exec(); 
 }
 
 bool Class::selectById(int id) {
     QSqlQuery query;
-    query.prepare(QString("SELECT * FROM %1 WHERE classID =?").arg(STDTOQSTR(this->tableName)));
+    query.prepare(QString("SELECT * FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id); 
     if(query.exec() && query.next()) {
-        this->classId = query.value("classID").toInt();
-        this->gradeId = query.value("gradeID").toInt();
-        this->className = query.value("className").toString().toStdString(); 
+        this->id = query.value("id").toInt();
+        this->majorId = query.value("majorID").toInt();
+        this->className = query.value("className").toString().toStdString();
+        return true;
     }
     else {
         return false; 
@@ -34,8 +35,8 @@ bool Class::selectById(int id) {
 }
 bool Class::deleteData() {
     QSqlQuery query;
-    query.prepare(QString("DELETE FROM %1 WHERE classID =?").arg(STDTOQSTR(this->tableName)));
-    query.addBindValue(classId); 
+    query.prepare(QString("DELETE FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
+    query.addBindValue(id);
     if(!query.exec()) {
         return false;
     }
@@ -43,10 +44,10 @@ bool Class::deleteData() {
 }
 bool Class::updateData() {
     QSqlQuery query;
-    query.prepare(QString("UPDATE %1 SET gradeID =?, className =? WHERE classID =?").arg(STDTOQSTR(this->tableName)));
-    query.addBindValue(gradeId); 
+    query.prepare(QString("UPDATE %1 SET majorID =?, className =? WHERE id =?").arg(STDTOQSTR(this->tableName)));
+    query.addBindValue(majorId);
     query.addBindValue(STDTOQSTR(className));
-    query.addBindValue(classId);
+    query.addBindValue(id);
     if(!query.exec()) {
         return false;
      }
@@ -61,8 +62,8 @@ std::vector<DataObject*> Class::selectAll() {
     if(query.exec()) {
         while(query.next()) {
             Class* obj = new Class();
-            obj->classId = query.value("classID").toInt();
-            obj->gradeId = query.value("gradeID").toInt(); 
+            obj->id = query.value("id").toInt();
+            obj->majorId = query.value("majorID").toInt();
             obj->className = query.value("className").toString().toStdString();
             result.push_back(obj);
         } 
@@ -72,5 +73,6 @@ std::vector<DataObject*> Class::selectAll() {
     
 }
 std::vector<DataObject*> Class::selectByQuery(QSqlQuery sql) {
-    std::vector<DataObject*> result; 
+    std::vector<DataObject*> result;
+    return result;
 }

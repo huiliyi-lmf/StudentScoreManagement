@@ -7,6 +7,7 @@
 class Admin : public DataObject
 {
 public:
+    int id;
     std::string userName;
     std::string userPwd;
     Admin();

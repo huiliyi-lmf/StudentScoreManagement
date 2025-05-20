@@ -13,8 +13,8 @@ SOURCES += \
     DataObjects/admin.cpp \
     DataObjects/class.cpp \
     DataObjects/dataobject.cpp \
-    DataObjects/grade.cpp \
-    DataObjects/result.cpp \
+    DataObjects/major.cpp \
+    DataObjects/score.cpp \
     DataObjects/student.cpp \
     DataObjects/subject.cpp \
     main.cpp \
@@ -25,8 +25,8 @@ HEADERS += \
     DataObjects/admin.h \
     DataObjects/class.h \
     DataObjects/dataobject.h \
-    DataObjects/grade.h \
-    DataObjects/result.h \
+    DataObjects/major.h \
+    DataObjects/score.h \
     DataObjects/student.h \
     DataObjects/subject.h \
     loginwindow.h \

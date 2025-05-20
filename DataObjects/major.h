@@ -1,13 +1,13 @@
-#ifndef GRADE_H
-#define GRADE_H
+#ifndef MAJOR_H
+#define MAJOR_H
 #include"dataobject.h"
 
-class Grade:public DataObject
+class Major:public DataObject
 {
 public:
-    std::string gradeName;
-    int gradeId;
-    Grade();
+    std::string majorName;
+    int id;
+    Major();
     bool createTable() override;
     bool insert() override;
     bool selectById(int id) override;
@@ -18,4 +18,4 @@ public:
 
 };
 
-#endif // GRADE_H
+#endif // MAJOR_H

@@ -6,8 +6,8 @@ class Class:public DataObject
 {
 public:
     std::string className;
-    int classId;
-    int gradeId;
+    int id;
+    int majorId;
     Class();
     bool createTable() override;
     bool insert() override;
