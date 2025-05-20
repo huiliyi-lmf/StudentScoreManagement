@@ -72,6 +72,4 @@ std::vector<DataObject*> Score::selectAll() {
     }
     return scores;
 }
-std::vector<DataObject*> Score::selectByQuery(QSqlQuery sql) {
-    return std::vector<DataObject*>();
-}
+

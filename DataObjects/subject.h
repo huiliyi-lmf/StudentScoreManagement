@@ -5,7 +5,6 @@
 class Subject:public DataObject
 {
 public:
-    int id;
     std::string subName;
     Subject();
     bool createTable() override;    //创建表
@@ -14,7 +13,6 @@ public:
     bool deleteData() override;     //删除数据
     bool updateData() override;     //更新数据
     std::vector<DataObject*> selectAll() override;//查询所有数据
-    std::vector<DataObject*> selectByQuery(QSqlQuery sql) override;//根据查询语句查询数据
 };
 
 #endif // SUBJECT_H

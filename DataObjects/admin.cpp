@@ -4,7 +4,7 @@ Admin::Admin() : DataObject("Admin") {
 
 }
 bool Admin::createTable() {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     return query.exec("CREATE TABLE IF NOT EXISTS admin ("
                         "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
                         "userName TEXT NOT NULL,"
@@ -12,7 +12,8 @@ bool Admin::createTable() {
                         ");");
 }
 bool Admin::insert() {
-    QSqlQuery query;
+    this->createTable();
+    QSqlQuery query(*this->db);
     query.prepare(QString("INSERT INTO %1 (userName,userPwd) VALUES (?,?)").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(this->userName));
     query.addBindValue(STDTOQSTR(this->userPwd));
@@ -22,7 +23,7 @@ bool Admin::insert() {
     return query.numRowsAffected() > 0;
 }
 bool Admin::selectById(int id) {
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1 WHERE id = ?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
     if (query.exec() && query.next()) {
@@ -37,7 +38,7 @@ bool Admin::selectById(int id) {
 }
 bool Admin::deleteData() {
 
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("DELETE FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
     if (!query.exec()) {
@@ -48,7 +49,7 @@ bool Admin::deleteData() {
 }
 bool Admin::updateData() {
 
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.prepare(QString("UPDATE %1 SET userName=?,usrPwd=? WHERE id=?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(this->userName));
     query.addBindValue(STDTOQSTR(this->userPwd));
@@ -61,7 +62,7 @@ bool Admin::updateData() {
 }
 std::vector<DataObject*> Admin::selectAll() {
 
-    QSqlQuery query;
+    QSqlQuery query(*this->db);
     query.exec(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName)));
     std::vector<DataObject*> result;
     while (query.next()) {
@@ -73,7 +74,4 @@ std::vector<DataObject*> Admin::selectAll() {
     }
     return result;
 
-}
-std::vector<DataObject*> Admin::selectByQuery(QSqlQuery sql) {
-    return std::vector<DataObject*>();
 }

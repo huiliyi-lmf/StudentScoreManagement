@@ -5,6 +5,7 @@
 #include <QDialog>
 #include <QMessageBox>
 #include <QPushButton>
+#include "DataObjects/admin.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class Registerwindow;

@@ -23,10 +23,30 @@ void Registerwindow::onRegisterButtonClicked()
         QMessageBox::warning(this, "警告", "用户名或密码不能为空");
         return; 
     }
-    QMessageBox::information(this, "账号注册成功", this->ui->userNameEdit->text());
+
+    std::string userInputName = this->ui->userNameEdit->text().toStdString();
+    std::string userInputPwd = this->ui->passwordEdit->text().toStdString();
+
+    Admin mapper;
+    auto admins = mapper.selectAll();
+    for(auto pb:admins) {
+        Admin* p = (Admin*)pb;
+        if(p->userName == userInputName) {
+            QMessageBox::warning(this, "警告", "用户名已存在！");
+            return;
+        }
+    }
+
+    mapper.userName = userInputName;
+    mapper.userPwd = userInputPwd;
+    if(mapper.insert()) {
+        QMessageBox::information(this, "信息", "账号注册成功");
+    } else {
+        QMessageBox::critical(this, "错误", "账号注册失败！");
+    }
 }
+
 void Registerwindow::onExitButtonClicked(){
     parentWindow->show();
     this->hide();
-    
 }

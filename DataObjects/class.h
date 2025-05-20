@@ -6,7 +6,6 @@ class Class:public DataObject
 {
 public:
     std::string className;
-    int id;
     int majorId;
     Class();
     bool createTable() override;
@@ -15,7 +14,6 @@ public:
     bool deleteData() override;
     bool updateData() override;
     std::vector<DataObject*> selectAll() override;
-    std::vector<DataObject*> selectByQuery(QSqlQuery sql) override;
 };
 
 #endif // CLASS_H

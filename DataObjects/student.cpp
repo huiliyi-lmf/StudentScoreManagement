@@ -34,7 +34,7 @@ bool Student::selectById(int id) {
     query.prepare(QString("SELECT * FROM %1 WHERE `id` = ?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
     if (query.exec() && query.next()) {
-        id = query.value("id").toInt();
+        this->id = query.value("id").toInt();
         stuName = query.value("StuName").toString().toStdString();
         classID = query.value("classID").toInt();
         gradeID = query.value("gradeID").toInt();
@@ -92,6 +92,4 @@ std::vector<DataObject*> Student::selectAll() {
     return students;
     
 }
-std::vector<DataObject*> Student::selectByQuery(QSqlQuery sql) {
-    std::vector<DataObject*> students; 
-}
+

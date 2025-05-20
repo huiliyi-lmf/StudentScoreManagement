@@ -18,7 +18,6 @@ protected:
     std::string tableName;
     DataObject(std::string name);
     static QSqlDatabase* db;
-    bool isDataBaseOpen;
 public:
     int id;
 
@@ -31,7 +30,6 @@ public:
     virtual bool deleteData()=0;                // 将当前类对象的ID指定的数据删除
     virtual bool updateData()=0;                // 将当前类对象的ID指定的数据更新
     virtual std::vector<DataObject*> selectAll()=0; // 获取所有数据
-    virtual std::vector<DataObject*> selectByQuery(QSqlQuery sql)=0;    // 根据sql条件查询
 };
 
 #endif // DATAOBJECT_H

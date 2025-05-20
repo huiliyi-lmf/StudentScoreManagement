@@ -7,7 +7,6 @@
 class Admin : public DataObject
 {
 public:
-    int id;
     std::string userName;
     std::string userPwd;
     Admin();
@@ -17,7 +16,6 @@ public:
     bool deleteData() override;
     bool updateData() override;
     std::vector<DataObject*> selectAll() override;
-    std::vector<DataObject*> selectByQuery(QSqlQuery sql) override;
 };
 
 #endif // ADMIN_H

@@ -2,8 +2,8 @@
 
 QSqlDatabase* DataObject::db = nullptr;
 
-DataObject::DataObject(std::string name) : tableName(name), isDataBaseOpen(false) {
-    isDataBaseOpen = DataObject::openDataBase();
+DataObject::DataObject(std::string name) : tableName(name) {
+
 }
 
 bool DataObject::openDataBase() {

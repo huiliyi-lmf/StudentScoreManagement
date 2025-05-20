@@ -60,6 +60,3 @@ std::vector<DataObject*> Major::selectAll() {
     }
     return majors;
 }
-std::vector<DataObject*> Major::selectByQuery(QSqlQuery sql) {
-    std::vector<DataObject*> majors;
-}

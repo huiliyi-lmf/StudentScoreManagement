@@ -69,10 +69,4 @@ std::vector<DataObject*> Class::selectAll() {
         } 
 }
     return result;
-       
-    
-}
-std::vector<DataObject*> Class::selectByQuery(QSqlQuery sql) {
-    std::vector<DataObject*> result;
-    return result;
 }

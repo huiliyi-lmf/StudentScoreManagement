@@ -6,7 +6,6 @@ class Major:public DataObject
 {
 public:
     std::string majorName;
-    int id;
     Major();
     bool createTable() override;
     bool insert() override;
@@ -14,8 +13,6 @@ public:
     bool deleteData() override;
     bool updateData() override;
     std::vector<DataObject*> selectAll() override;
-    std::vector<DataObject*> selectByQuery(QSqlQuery sql) override;
-
 };
 
 #endif // MAJOR_H

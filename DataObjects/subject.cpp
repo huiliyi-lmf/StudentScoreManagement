@@ -66,8 +66,5 @@ std::vector<DataObject*> Subject::selectAll()
     }
     return subjects;
 }
-std::vector<DataObject*> Subject::selectByQuery(QSqlQuery sql)
-{
-    std::vector<DataObject*> subjects;
-}
+
     

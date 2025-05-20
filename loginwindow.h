@@ -2,6 +2,8 @@
 #define LOGINWINDOW_H
 #include<QMainWindow>
 #include"registerwindow.h"
+#include "dashboard.h"
+#include "DataObjects/admin.h"
 #include <QDialog>
 #include <QMessageBox>
 #include <QPushButton>
