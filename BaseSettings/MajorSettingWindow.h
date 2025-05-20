@@ -17,6 +17,12 @@ public:
 
 private:
     Ui::MajorSettingWindow *ui;
+    QWidget* parentPointer;
+
+public slots:
+    void onAddBtnClicked();
+    void onUpdateBtnClicked();
+    void onDeleteBtnClicked();
 };
 
 #endif // MAJORSETTINGWINDOW_H

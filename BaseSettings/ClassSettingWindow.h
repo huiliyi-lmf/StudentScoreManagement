@@ -17,6 +17,12 @@ public:
 
 private:
     Ui::ClassSettingWindow *ui;
+    QWidget* parentPointer;
+
+public slots:
+    void onAddBtnClicked();
+    void onUpdateBtnClicked();
+    void onDeleteBtnClicked();
 };
 
 #endif // CLASSSETTINGWINDOW_H

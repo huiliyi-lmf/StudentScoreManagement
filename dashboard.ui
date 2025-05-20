@@ -57,9 +57,9 @@
     <property name="title">
      <string>基础设置</string>
     </property>
-    <addaction name="action"/>
-    <addaction name="action_2"/>
-    <addaction name="action_3"/>
+    <addaction name="majorSettingAction"/>
+    <addaction name="classSettingAction"/>
+    <addaction name="subjectSettingAction"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
@@ -95,17 +95,17 @@
    <addaction name="menu_5"/>
    <addaction name="menu_4"/>
   </widget>
-  <action name="action">
+  <action name="majorSettingAction">
    <property name="text">
     <string>专业设置</string>
    </property>
   </action>
-  <action name="action_2">
+  <action name="classSettingAction">
    <property name="text">
     <string>班级设置</string>
    </property>
   </action>
-  <action name="action_3">
+  <action name="subjectSettingAction">
    <property name="text">
     <string>课程设置</string>
    </property>

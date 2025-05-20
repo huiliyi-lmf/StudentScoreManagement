@@ -6,6 +6,9 @@ DashBoard::DashBoard(QWidget *parent)
     , ui(new Ui::DashBoard), parentPointer(parent)
 {
     ui->setupUi(this);
+    QObject::connect(this->ui->majorSettingAction, &QAction::triggered, this, &DashBoard::openMajorSetting);
+    QObject::connect(this->ui->classSettingAction, &QAction::triggered, this, &DashBoard::openClassSetting);
+    QObject::connect(this->ui->subjectSettingAction, &QAction::triggered, this, &DashBoard::openSubjectSetting);
 }
 
 DashBoard::~DashBoard()
@@ -21,4 +24,20 @@ void DashBoard::closeEvent(QCloseEvent *event) {
     } else {
         event->ignore();
     }
+}
+
+void DashBoard::openClassSetting() {
+    this->setEnabled(false);
+    ClassSettingWindow* window = new ClassSettingWindow(this);
+    window->show();
+}
+void DashBoard::openMajorSetting() {
+    this->setEnabled(false);
+    MajorSettingWindow* window = new MajorSettingWindow(this);
+    window->show();
+}
+void DashBoard::openSubjectSetting() {
+    this->setEnabled(false);
+    SubjectSettingWindow* window = new SubjectSettingWindow(this);
+    window->show();
 }

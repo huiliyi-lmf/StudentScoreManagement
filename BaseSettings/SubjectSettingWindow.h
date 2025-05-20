@@ -17,6 +17,12 @@ public:
 
 private:
     Ui::SubjectSettingWindow *ui;
+    QWidget* parentPointer;
+
+public slots:
+    void onAddBtnClicked();
+    void onUpdateBtnClicked();
+    void onDeleteBtnClicked();
 };
 
 #endif // SUBJECTSETTINGWINDOW_H
