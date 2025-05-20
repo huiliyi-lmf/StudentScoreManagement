@@ -11,12 +11,14 @@ bool Major::createTable() {
 ") ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;");
 }
 bool Major::insert() {
+    this->createTable();
     QSqlQuery query(*this->db);
     return query.exec(QString("INSERT INTO %1 (majorName) values ('%2')").arg(STDTOQSTR(this->tableName)).arg(STDTOQSTR(this->majorName)));
 
 }
 
 bool Major::selectById(int id) {
+    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id); 
@@ -30,6 +32,7 @@ bool Major::selectById(int id) {
     }
 }
 bool Major::deleteData() {
+    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("DELETE FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
@@ -39,6 +42,7 @@ bool Major::deleteData() {
     return query.numRowsAffected() > 0;
 }
 bool Major::updateData() {
+    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("UPDATE %1 SET majorName =? WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(majorName));
@@ -49,6 +53,7 @@ bool Major::updateData() {
     return query.numRowsAffected() > 0; 
 }
 std::vector<DataObject*> Major::selectAll() {
+    this->createTable();
     std::vector<DataObject*> majors;
     QSqlQuery query(*this->db);
     query.exec(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName))); 

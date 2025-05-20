@@ -14,6 +14,7 @@ bool Score::createTable() {
 
 }
 bool Score::insert() {
+    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("INSERT INTO %1 (stuId,subId,score) values(?,?,?)").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(stuId)); 
@@ -23,6 +24,7 @@ bool Score::insert() {
 
 }
 bool Score::selectById(int id) {
+    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
@@ -38,6 +40,7 @@ bool Score::selectById(int id) {
     }
 }
 bool Score::deleteData() {
+    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("DELETE FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
@@ -47,6 +50,7 @@ bool Score::deleteData() {
     return query.numRowsAffected() > 0;
 }
 bool Score::updateData() {
+    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("UPDATE %1 SET stuId=?,subId=?,score=? WHERE id=?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(stuId)); 
@@ -59,6 +63,7 @@ bool Score::updateData() {
     return query.numRowsAffected() > 0;
 }
 std::vector<DataObject*> Score::selectAll() {
+    this->createTable();
     std::vector<DataObject*> scores;
     QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName))); 

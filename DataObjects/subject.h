@@ -5,6 +5,7 @@
 class Subject:public DataObject
 {
 public:
+    int majorId;
     std::string subName;
     Subject();
     bool createTable() override;    //创建表
