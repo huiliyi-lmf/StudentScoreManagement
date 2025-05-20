@@ -5,16 +5,15 @@ bool Subject::createTable()
 {
     QSqlQuery query;
    return query.exec("CREATE TABLE IF NOT EXISTS `subject`  ("
-  "`subID` int(11) NOT NULL,"
+  "`id` int(11) NOT NULL,"
   "`subName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
-  "PRIMARY KEY (`subID`) USING BTREE"
+  "PRIMARY KEY (`id`) USING BTREE"
 ") ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;");
 }
 bool Subject::insert() 
 {
     QSqlQuery query;
-    query.prepare(QString("INSERT INTO %1 (`subID`, `subName`) VALUES (?, ?)").arg(STDTOQSTR(this->tableName)));
-    query.addBindValue(subID);
+    query.prepare(QString("INSERT INTO %1 ( `subName`) VALUES (?)").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(subName));
     return query.exec();
 }
@@ -22,10 +21,10 @@ bool Subject::insert()
 bool Subject::selectById(int id)
 {
     QSqlQuery query;
-    query.prepare(QString("SELECT * FROM %1 WHERE subID =?").arg(STDTOQSTR(this->tableName)));
-    query.addBindValue(subID);
+    query.prepare(QString("SELECT * FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
+    query.addBindValue(id);
     if (query.exec() && query.next()) {
-        this->subID = query.value("subID").toInt();
+        this->id = query.value("id").toInt();
         this->subName = query.value("subName").toString().toStdString();
         return true; 
     }
@@ -36,8 +35,8 @@ bool Subject::selectById(int id)
 bool Subject::deleteData()
 {
     QSqlQuery query;
-    query.prepare(QString("DELETE FROM %1 WHERE subID =?").arg(STDTOQSTR(this->tableName)));
-    query.addBindValue(subID);
+    query.prepare(QString("DELETE FROM %1 WHERE id=?").arg(STDTOQSTR(this->tableName)));
+    query.addBindValue(id);
     if (!query.exec()) {
         return false;
     }
@@ -46,9 +45,9 @@ bool Subject::deleteData()
 bool Subject::updateData()
 {
     QSqlQuery query;
-    query.prepare(QString("UPDATE %1 SET subName =? WHERE subID =?").arg(STDTOQSTR(this->tableName)));
+    query.prepare(QString("UPDATE %1 SET subName =? WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(subName));
-    query.addBindValue(subID);
+    query.addBindValue(id);
     if (!query.exec()) {
         return false;
     }
@@ -61,7 +60,7 @@ std::vector<DataObject*> Subject::selectAll()
     query.exec(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName)));
     while (query.next()) {
         Subject* subject = new Subject();
-        subject->subID = query.value("subID").toInt();
+        subject->id = query.value("id").toInt();
         subject->subName = query.value("subName").toString().toStdString();
         subjects.push_back(subject); 
     }

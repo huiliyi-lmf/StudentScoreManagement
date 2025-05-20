@@ -5,7 +5,7 @@
 class Student:public DataObject
 {
 public:
-    std::string stuId;
+    int id;
     std::string stuName;
     int classID;
     int gradeID;
