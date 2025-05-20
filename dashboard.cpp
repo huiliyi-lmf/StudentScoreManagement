@@ -3,7 +3,7 @@
 
 DashBoard::DashBoard(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::DashBoard)
+    , ui(new Ui::DashBoard), parentPointer(parent)
 {
     ui->setupUi(this);
 }
@@ -11,4 +11,14 @@ DashBoard::DashBoard(QWidget *parent)
 DashBoard::~DashBoard()
 {
     delete ui;
+    parentPointer->show();
+}
+
+void DashBoard::closeEvent(QCloseEvent *event) {
+    if(QMessageBox::question(this, "提示", "确定要退出吗？") == QMessageBox::Yes) {
+        event->accept();
+        this->deleteLater();
+    } else {
+        event->ignore();
+    }
 }

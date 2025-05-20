@@ -28,10 +28,9 @@ void LoginWindow::onLoginButtonClicked() {
                 QMessageBox::critical(this, "错误", "密码错误！");
             } else {
                 QMessageBox::information(this, "信息", "登陆成功！");
-                DashBoard dashboard(this);
+                DashBoard* dashboard = new DashBoard(this);
                 this->hide();
-                dashboard.show();
-                this->show();
+                dashboard->show();
             }
             return;
         }
