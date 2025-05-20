@@ -5,6 +5,7 @@ LoginWindow::LoginWindow(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::LoginWindow) {
     ui->setupUi(this);
+    this->setLayout(ui->verticalLayout);
     QObject::connect(this->ui->loginButton, &QPushButton::clicked, this, &LoginWindow::onLoginButtonClicked);
     QObject::connect(this->ui->registerButton, &QPushButton::clicked, this, &LoginWindow::onRegisterButtonClicked);
 }
@@ -15,10 +16,12 @@ LoginWindow::~LoginWindow() {
 }
 
 void LoginWindow::onLoginButtonClicked() {
+
     QMessageBox::information(this, "Hello", this->ui->userNameEdit->text());
 }
 
 void LoginWindow::onRegisterButtonClicked() {
+
     if(!registerwindow_ui)
     {
         registerwindow_ui= new Registerwindow(this);
@@ -26,3 +29,7 @@ void LoginWindow::onRegisterButtonClicked() {
     this->hide();
     registerwindow_ui->show();
 }
+
+
+
+

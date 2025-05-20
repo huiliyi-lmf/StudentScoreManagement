@@ -25,5 +25,6 @@ private:
 private slots:
     void onLoginButtonClicked();
     void onRegisterButtonClicked();
+
 };
 #endif // LOGINWINDOW_H

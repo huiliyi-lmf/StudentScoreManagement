@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1005</width>
-    <height>433</height>
+    <width>1003</width>
+    <height>527</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
+     <x>10</x>
+     <y>20</y>
      <width>980</width>
      <height>381</height>
     </rect>
@@ -140,6 +140,11 @@
           <pointsize>20</pointsize>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover {
+    color: yellow;
+}</string>
+        </property>
         <property name="text">
          <string>注册</string>
         </property>
@@ -151,6 +156,11 @@
          <font>
           <pointsize>20</pointsize>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:hover {
+    color: red;
+}</string>
         </property>
         <property name="text">
          <string>退出</string>

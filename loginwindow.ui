@@ -16,10 +16,10 @@
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>90</y>
-     <width>811</width>
-     <height>381</height>
+     <x>30</x>
+     <y>40</y>
+     <width>861</width>
+     <height>411</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -37,7 +37,7 @@
        </font>
       </property>
       <property name="text">
-       <string>学生成绩管理系统</string>
+       <string>学生成绩管理系统 </string>
       </property>
       <property name="alignment">
        <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -63,7 +63,7 @@
     <item>
      <layout class="QGridLayout" name="gridLayout">
       <item row="1" column="0">
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="code">
         <property name="font">
          <font>
           <pointsize>20</pointsize>
@@ -99,7 +99,7 @@
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="Username">
         <property name="font">
          <font>
           <pointsize>20</pointsize>
@@ -140,8 +140,11 @@
           <pointsize>20</pointsize>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="text">
-         <string>登陆</string>
+         <string>登录</string>
         </property>
        </widget>
       </item>
@@ -151,6 +154,9 @@
          <font>
           <pointsize>20</pointsize>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>注册</string>

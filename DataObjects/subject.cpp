@@ -71,3 +71,4 @@ std::vector<DataObject*> Subject::selectByQuery(QSqlQuery sql)
 {
     std::vector<DataObject*> subjects;
 }
+    
