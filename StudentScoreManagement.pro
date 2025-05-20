@@ -10,6 +10,9 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    BaseSettings/ClassSettingWindow.cpp \
+    BaseSettings/MajorSettingWindow.cpp \
+    BaseSettings/SubjectSettingWindow.cpp \
     DataObjects/admin.cpp \
     DataObjects/class.cpp \
     DataObjects/dataobject.cpp \
@@ -23,6 +26,9 @@ SOURCES += \
     registerwindow.cpp
 
 HEADERS += \
+    BaseSettings/ClassSettingWindow.h \
+    BaseSettings/MajorSettingWindow.h \
+    BaseSettings/SubjectSettingWindow.h \
     DataObjects/admin.h \
     DataObjects/class.h \
     DataObjects/dataobject.h \
@@ -35,6 +41,9 @@ HEADERS += \
     registerwindow.h
 
 FORMS += \
+    BaseSettings/ClassSettingWindow.ui \
+    BaseSettings/MajorSettingWindow.ui \
+    BaseSettings/SubjectSettingWindow.ui \
     dashboard.ui \
     loginwindow.ui \
     registerwindow.ui
