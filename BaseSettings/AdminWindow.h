@@ -24,6 +24,7 @@ public slots:
     void addNewAdmin();
     void updateAdmin();
     void deleteAdmin();
+    void doubleClickAdminTable();
 };
 
 #endif // ADMINWINDOW_H
