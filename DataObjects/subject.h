@@ -2,6 +2,8 @@
 #define SUBJECT_H
 #include"dataobject.h"
 #include <QSqlQuery>
+#include<QMessageBox>
+#include<QSqlError>
 class Subject:public DataObject
 {
 public:
@@ -14,6 +16,7 @@ public:
     bool deleteData() override;     //删除数据
     bool updateData() override;     //更新数据
     std::vector<DataObject*> selectAll() override;//查询所有数据
+    bool isSubjectNameTakenInMajor(const std::string& subjectNameToCheck, int targetMajorId, int currentSubjectId = -1);
 };
 
 #endif // SUBJECT_H

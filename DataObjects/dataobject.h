@@ -14,6 +14,8 @@ class DataObject
 {
 public:
     DataObject();
+    static QSqlDatabase* getDb() { return db; }
+    virtual ~DataObject(){};
 protected:
     std::string tableName;
     DataObject(std::string name);

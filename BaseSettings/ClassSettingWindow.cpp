@@ -171,11 +171,13 @@ Class classFetcher;
         if(!currentClass){
             continue;
         }
+        Major major;
+        major.selectById(currentClass->majorId);
         QTableWidgetItem*idItem=new QTableWidgetItem(QString::number(currentClass->id));
-        QTableWidgetItem *majorIdItem = new QTableWidgetItem(QString::number(currentClass->majorId));
+        QTableWidgetItem *majorNameItem = new QTableWidgetItem(QString::fromStdString(major.majorName));
         QTableWidgetItem *classNameItem = new QTableWidgetItem(QString::fromStdString(currentClass->className));
         ui->tbClass->setItem(row, 0, idItem);   // 第0列放ID
-        ui->tbClass->setItem(row, 1, majorIdItem); // 第1列放专业Id
+        ui->tbClass->setItem(row, 1, majorNameItem); // 第1列放专业名称
         ui->tbClass->setItem(row, 2, classNameItem); // 第2列放班级名称
     }
     for(DataObject*dobj:dataObjects){

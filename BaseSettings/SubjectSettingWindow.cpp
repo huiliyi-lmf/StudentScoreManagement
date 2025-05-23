@@ -13,6 +13,7 @@ SubjectSettingWindow::SubjectSettingWindow(QWidget *parent)
     QObject::connect(this->ui->btnExit, &QPushButton::clicked, this, &SubjectSettingWindow::onExitBtnClicked);
     loadMajorsToComboBox();
     loadSubjectsToTable();
+
 }
 
 SubjectSettingWindow::~SubjectSettingWindow()
@@ -162,11 +163,13 @@ void SubjectSettingWindow::loadSubjectsToTable(){
         if(!currentSubject){
             continue;
         }
+        Major major;
+        major.selectById(currentSubject->majorId);
         QTableWidgetItem*idItem=new QTableWidgetItem(QString::number(currentSubject->id));
-        QTableWidgetItem *majorIdItem = new QTableWidgetItem(QString::number(currentSubject->majorId));
+        QTableWidgetItem *majorNameItem = new QTableWidgetItem(QString::fromStdString(major.majorName));
         QTableWidgetItem *subNameItem = new QTableWidgetItem(QString::fromStdString(currentSubject->subName));
         ui->tbSubject->setItem(row, 0, idItem);   // 第0列放ID
-        ui->tbSubject->setItem(row, 1, majorIdItem); // 第1列放学科Id
+        ui->tbSubject->setItem(row, 1, majorNameItem); // 第1列放专业名称
         ui->tbSubject->setItem(row, 2, subNameItem); // 第2列放学科名称
     }
     for(DataObject*dobj:dataObjects){

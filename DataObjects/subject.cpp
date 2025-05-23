@@ -4,12 +4,10 @@ Subject::Subject():DataObject("Subject") {}
 bool Subject::createTable() 
 {
     QSqlQuery query(*this->db);
-   return query.exec("CREATE TABLE IF NOT EXISTS `subject`  ("
-  "`id` int(11) NOT NULL,"
-  "`majorId` int(11) NOT NULL,"
-  "`subName` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
-  "PRIMARY KEY (`id`) USING BTREE"
-") ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;");
+   return query.exec("CREATE TABLE IF NOT EXISTS subject ("
+  "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+  "majorId INTEGER NOT NULL,"
+  "subName TEXT NOT NULL);");
 }
 bool Subject::insert() 
 {
@@ -75,6 +73,40 @@ std::vector<DataObject*> Subject::selectAll()
         subjects.push_back(subject); 
     }
     return subjects;
+}
+bool Subject::isSubjectNameTakenInMajor(const std::string& subjectNameToCheck, int targetMajorId, int currentSubjectId ){
+    if (!this->db || !this->db->isOpen()) {
+        QMessageBox::critical(nullptr, "数据库错误", "数据库未连接，无法检查班级名称。");
+        return true; 
+    }
+
+    this->createTable(); 
+
+    QString queryString = QString("SELECT COUNT(*) FROM %1 WHERE subName = :subName AND majorId = :majorId")
+                              .arg(STDTOQSTR(this->tableName));
+    
+    if (currentSubjectId > 0) { 
+        queryString += " AND id != :currentSubjectId";
+    }
+
+    QSqlQuery query(*this->db);
+    query.prepare(queryString);
+    query.bindValue(":subName", QString::fromStdString(subjectNameToCheck));
+    query.bindValue(":majorId", targetMajorId);
+
+    if (currentSubjectId > 0) {
+        query.bindValue(":currentSubjectId", currentSubjectId);
+    }
+
+    if (query.exec() && query.next()) {
+        int count = query.value(0).toInt();
+        return count > 0; // 如果 count > 0，说明名称已被占用
+    } else {
+        // 查询失败，也保守地认为名称可能已被占用，或者记录错误
+        QMessageBox::critical(nullptr, "查询错误", QString("检查学科名称时发生错误: %1").arg(query.lastError().text()));
+        return true; 
+    }
+    return false; // 默认情况下，如果查询成功且count为0，则名称未被占用
 }
 
     

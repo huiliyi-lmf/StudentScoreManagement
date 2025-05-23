@@ -14,8 +14,8 @@ MajorSettingWindow::MajorSettingWindow(QWidget *parent)
     this->setAttribute(Qt::WA_DeleteOnClose);
     QObject::connect(this->ui->btnAdd, &QPushButton::clicked, this, &MajorSettingWindow::onAddBtnClicked);
     QObject::connect(this->ui->btnDel, &QPushButton::clicked, this, &MajorSettingWindow::onDeleteBtnClicked);
-    QObject::connect(this->ui->btnEdit, &QPushButton::clicked, this, &MajorSettingWindow::onUpdateBtnClicked);
-    QObject::connect(this->ui->btnExit,&QPushButton::clicked,this,&MajorSettingWindow::onExitBtnClicked);
+    QObject::connect(this->ui->btnEdit,&QPushButton::clicked, this, &MajorSettingWindow::onUpdateBtnClicked);
+    QObject::connect(this->ui->btnExit,&QPushButton::clicked, this, &MajorSettingWindow::onExitBtnClicked);
     loadMajorsToTable();
 }
 

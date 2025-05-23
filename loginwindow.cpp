@@ -32,10 +32,13 @@ void LoginWindow::onLoginButtonClicked() {
                 this->hide();
                 dashboard->show();
             }
+
             return;
         }
     }
     QMessageBox::critical(this, "错误", "用户不存在！");
+
+
 }
 
 void LoginWindow::onRegisterButtonClicked() {

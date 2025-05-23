@@ -3,21 +3,31 @@
 Class::Class():DataObject("Class") {}
 bool Class::createTable() {
     QSqlQuery query(*this->db);
-    return query.exec("CREATE TABLE IF NOT EXISTS `class`  ("
-  "`id` int(11) NOT NULL,"
- " `majorId` int(11) NOT NULL,"
-  "`className` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
- " PRIMARY KEY (`id`) USING BTREE"
-") ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;"
-                      );
+    // 使用 SQLite 兼容的建表语句
+    return query.exec("CREATE TABLE IF NOT EXISTS class (" // 注意表名 class 不是关键字，但为清晰可加引号 `class`
+                      "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," // id 作为自增主键
+                      "majorId INTEGER NOT NULL,"
+                      "className TEXT NOT NULL"
+                      ");");
 
 }
 
 bool Class::insert() {
-    this->createTable();
-   QSqlQuery query(*this->db);
-   query.prepare(QString("INSERT INTO %1 (majorID, className) values ('%2', '%3')").arg(STDTOQSTR(this->tableName)).arg(majorId).arg(STDTOQSTR(this->className)));
-   return query.exec(); 
+    this->createTable(); // Ensure table exists
+    QSqlQuery query(*this->db);
+    // Prepare statement with placeholders for SQLite compatibility and security
+    query.prepare(QString("INSERT INTO %1 (majorId, className) VALUES (?, ?)")
+                      .arg(STDTOQSTR(this->tableName)));
+    query.addBindValue(this->majorId); // Bind majorId
+    query.addBindValue(QString::fromStdString(this->className)); // Bind className
+    
+    if (!query.exec()) {
+        // qDebug() << "Insert failed:" << query.lastError().text(); // Optional: for debugging
+        return false;
+    }
+    // Optionally, retrieve the last inserted ID if needed (especially with AUTOINCREMENT)
+    // this->id = query.lastInsertId().toInt(); 
+    return true;
 }
 
 bool Class::selectById(int id) {
@@ -46,17 +56,20 @@ bool Class::deleteData() {
     return query.numRowsAffected() > 0;
 }
 bool Class::updateData() {
-    this->createTable();
+    this->createTable(); // Ensure table exists, though ideally not needed for every update
     QSqlQuery query(*this->db);
-    query.prepare(QString("UPDATE %1 SET majorID =?, className =? WHERE id =?").arg(STDTOQSTR(this->tableName)));
-    query.addBindValue(majorId);
-    query.addBindValue(STDTOQSTR(className));
-    query.addBindValue(id);
-    if(!query.exec()) {
+    // Ensure column names match the SQLite table definition (e.g., majorId)
+    query.prepare(QString("UPDATE %1 SET majorId = ?, className = ? WHERE id = ?")
+                      .arg(STDTOQSTR(this->tableName)));
+    query.addBindValue(this->majorId); // Bind majorId
+    query.addBindValue(QString::fromStdString(this->className)); // Bind className
+    query.addBindValue(this->id); // Bind id for the WHERE clause
+    
+    if (!query.exec()) {
+        // qDebug() << "Update failed:" << query.lastError().text(); // Optional: for debugging
         return false;
-     }
-    return query.numRowsAffected() > 0;
-  
+    }
+    return query.numRowsAffected() > 0; // Check if any row was actually updated
 }
 
 std::vector<DataObject*> Class::selectAll() {
@@ -74,4 +87,41 @@ std::vector<DataObject*> Class::selectAll() {
         } 
 }
     return result;
+}
+
+// 新增函数实现：检查在同一专业下，指定班级名称是否已被其他班级使用
+bool Class::isClassNameTakenInMajor(const std::string& classNameToCheck, int targetMajorId, int currentClassId) {
+    if (!this->db || !this->db->isOpen()) {
+        // 实际项目中可能需要更健壮的错误处理，例如日志记录或抛出异常
+        QMessageBox::critical(nullptr, "数据库错误", "数据库未连接，无法检查班级名称。");
+        return true; // 保守起见，如果数据库不可用，则认为名称已被占用
+    }
+
+    this->createTable(); // 确保表存在
+
+    QString queryString = QString("SELECT COUNT(*) FROM %1 WHERE className = :className AND majorId = :majorId")
+                              .arg(STDTOQSTR(this->tableName));
+    
+    if (currentClassId > 0) { // 如果提供了 currentClassId，表示我们正在更新一个现有班级，需要排除它自身
+        queryString += " AND id != :currentClassId";
+    }
+
+    QSqlQuery query(*this->db);
+    query.prepare(queryString);
+    query.bindValue(":className", QString::fromStdString(classNameToCheck));
+    query.bindValue(":majorId", targetMajorId);
+
+    if (currentClassId > 0) {
+        query.bindValue(":currentClassId", currentClassId);
+    }
+
+    if (query.exec() && query.next()) {
+        int count = query.value(0).toInt();
+        return count > 0; // 如果 count > 0，说明名称已被占用
+    } else {
+        // 查询失败，也保守地认为名称可能已被占用，或者记录错误
+        QMessageBox::critical(nullptr, "查询错误", QString("检查班级名称时发生错误: %1").arg(query.lastError().text()));
+        return true; 
+    }
+    return false; // 默认情况下，如果查询成功且count为0，则名称未被占用
 }
