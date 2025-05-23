@@ -7,6 +7,7 @@
 #include "BaseSettings/ClassSettingWindow.h"
 #include "BaseSettings/MajorSettingWindow.h"
 #include "BaseSettings/SubjectSettingWindow.h"
+#include "BaseSettings/AdminWindow.h"
 
 namespace Ui {
 class DashBoard;
@@ -29,6 +30,7 @@ public slots:
     void openClassSetting();
     void openMajorSetting();
     void openSubjectSetting();
+    void openAdminWindow();
 };
 
 #endif // DASHBOARD_H

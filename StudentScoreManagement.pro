@@ -10,6 +10,7 @@ INCLUDEPATH += $$PWD/DataObjects
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    BaseSettings/AdminWindow.cpp \
     BaseSettings/ClassSettingWindow.cpp \
     BaseSettings/MajorSettingWindow.cpp \
     BaseSettings/SubjectSettingWindow.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
     registerwindow.cpp
 
 HEADERS += \
+    BaseSettings/AdminWindow.h \
     BaseSettings/ClassSettingWindow.h \
     BaseSettings/MajorSettingWindow.h \
     BaseSettings/SubjectSettingWindow.h \
@@ -41,6 +43,7 @@ HEADERS += \
     registerwindow.h
 
 FORMS += \
+    BaseSettings/AdminWindow.ui \
     BaseSettings/ClassSettingWindow.ui \
     BaseSettings/MajorSettingWindow.ui \
     BaseSettings/SubjectSettingWindow.ui \

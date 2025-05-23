@@ -41,3 +41,8 @@ void DashBoard::openSubjectSetting() {
     SubjectSettingWindow* window = new SubjectSettingWindow(this);
     window->show();
 }
+void DashBoard::openAdminWindow() {
+    this->setEnabled(false);
+    AdminWindow* window = new AdminWindow(this);
+    window->show();
+}
