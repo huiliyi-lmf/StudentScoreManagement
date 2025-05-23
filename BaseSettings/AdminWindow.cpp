@@ -6,6 +6,7 @@ AdminWindow::AdminWindow(QWidget *parent)
     , ui(new Ui::AdminWindow), parent(parent)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose);
 
     QObject::connect(this->ui->btnAdd, &QPushButton::clicked, this, &AdminWindow::addNewAdmin);
     QObject::connect(this->ui->btnEdit, &QPushButton::clicked, this, &AdminWindow::updateAdmin);

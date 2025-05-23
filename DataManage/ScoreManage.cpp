@@ -6,9 +6,11 @@ ScoreManage::ScoreManage(QWidget *parent)
     , ui(new Ui::ScoreManage), parent(parent)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 ScoreManage::~ScoreManage()
 {
     delete ui;
+    parent->setEnabled(true);
 }

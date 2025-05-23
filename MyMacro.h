@@ -1,6 +1,10 @@
 #ifndef MYMACRO_H
 #define MYMACRO_H
 
+#define DATABASE_NAME "student.db"
+
+#define STDTOQSTR(str) QString(std::string(str).c_str())
+
 #define QBUTTON_CONNECT_MYCREATE(btn, slot) \
 QOBJECT_CONNECT_MYCREATE(btn, &QPushButton::clicked, slot)
 

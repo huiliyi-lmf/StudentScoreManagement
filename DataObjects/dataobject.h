@@ -6,9 +6,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QString>
-
-#define DATABASE_NAME "student.db"
-#define STDTOQSTR(str) QString(std::string(str).c_str())
+#include "MyMacro.h"
 
 class DataObject
 {

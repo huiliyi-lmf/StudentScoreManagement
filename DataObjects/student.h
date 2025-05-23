@@ -7,11 +7,11 @@ class Student:public DataObject
 public:
     std::string stuName;
     int classID;
-    int gradeID;
+    int majorID;
     std::string sex;
     int age;
     std::string address;
-    std::string nation;
+    std::string phoneNum;
     Student();
     bool createTable() override;    //创建表
     bool insert() override;         //插入数据

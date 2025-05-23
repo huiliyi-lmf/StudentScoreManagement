@@ -6,6 +6,7 @@ StudentSearch::StudentSearch(QWidget *parent)
     , ui(new Ui::StudentSearch), parent(parent)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 StudentSearch::~StudentSearch()

@@ -9,6 +9,7 @@ DashBoard::DashBoard(QWidget *parent, std::string userName)
     QACTION_CONNECT_MYCREATE(this->ui->majorSettingAction, &DashBoard::openMajorSetting);
     QACTION_CONNECT_MYCREATE(this->ui->classSettingAction, &DashBoard::openClassSetting);
     QACTION_CONNECT_MYCREATE(this->ui->subjectSettingAction, &DashBoard::openSubjectSetting);
+    QACTION_CONNECT_MYCREATE(this->ui->adminSettingAction, &DashBoard::openAdminWindow);
     QACTION_CONNECT_MYCREATE(this->ui->majorAnalysisAction, &DashBoard::openMajorAnalysis);
     QACTION_CONNECT_MYCREATE(this->ui->scoreAnalysisAction, &DashBoard::openScoreAnalysis);
     QACTION_CONNECT_MYCREATE(this->ui->scoreDataAction, &DashBoard::openScoreManage);

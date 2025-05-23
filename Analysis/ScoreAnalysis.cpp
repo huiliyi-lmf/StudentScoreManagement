@@ -6,6 +6,7 @@ ScoreAnalysis::ScoreAnalysis(QWidget *parent)
     , ui(new Ui::ScoreAnalysis), parent(parent)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 ScoreAnalysis::~ScoreAnalysis()

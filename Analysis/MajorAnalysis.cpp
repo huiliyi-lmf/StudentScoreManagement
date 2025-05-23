@@ -6,6 +6,7 @@ MajorAnalysis::MajorAnalysis(QWidget *parent)
     , ui(new Ui::MajorAnalysis), parent(parent)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 MajorAnalysis::~MajorAnalysis()

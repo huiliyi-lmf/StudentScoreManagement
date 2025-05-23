@@ -6,6 +6,7 @@ StudentManage::StudentManage(QWidget *parent)
     , ui(new Ui::StudentManage), parent(parent)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 StudentManage::~StudentManage()
