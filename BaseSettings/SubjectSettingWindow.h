@@ -1,8 +1,9 @@
 #ifndef SUBJECTSETTINGWINDOW_H
 #define SUBJECTSETTINGWINDOW_H
-
+#include"DataObjects/major.h"
 #include <QMainWindow>
-
+#include"DataObjects/subject.h"
+#include<vector>
 namespace Ui {
 class SubjectSettingWindow;
 }
@@ -14,7 +15,8 @@ class SubjectSettingWindow : public QMainWindow
 public:
     explicit SubjectSettingWindow(QWidget *parent = nullptr);
     ~SubjectSettingWindow();
-
+    void loadMajorsToComboBox();
+    void loadSubjectsToTable();
 private:
     Ui::SubjectSettingWindow *ui;
     QWidget* parentPointer;
@@ -23,6 +25,7 @@ public slots:
     void onAddBtnClicked();
     void onUpdateBtnClicked();
     void onDeleteBtnClicked();
+    void onExitBtnClicked();
 };
 
 #endif // SUBJECTSETTINGWINDOW_H
