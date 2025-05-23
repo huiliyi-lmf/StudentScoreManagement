@@ -28,6 +28,7 @@ public slots:
     void onUpdateBtnClicked();
     void onDeleteBtnClicked();
     void onExitBtnClicked();
+    void onTableItemDoubleClicked(int row, int column);
 };
 
 #endif // CLASSSETTINGWINDOW_H
