@@ -1,6 +1,6 @@
 #ifndef MAJORSETTINGWINDOW_H
 #define MAJORSETTINGWINDOW_H
-#include "DataObjects\major.h"
+#include "DataObjects/major.h"
 #include <QMainWindow>
 #include<QMessageBox>
 

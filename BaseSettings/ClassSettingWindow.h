@@ -1,10 +1,10 @@
 #ifndef CLASSSETTINGWINDOW_H
 #define CLASSSETTINGWINDOW_H
-#include"DataObjects\class.h"
-#include"DataObjects\major.h"
+#include"DataObjects/class.h"
+#include"DataObjects/major.h"
 #include <QMainWindow>
 #include <QMessageBox>
-#include"DataObjects\class.h"
+#include"DataObjects/class.h"
 namespace Ui {
 class ClassSettingWindow;
 }
