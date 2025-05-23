@@ -2,6 +2,8 @@
 #define ADMINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
+#include <QInputDialog>
 #include "DataObjects/admin.h"
 
 namespace Ui {

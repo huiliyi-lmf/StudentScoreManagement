@@ -32,6 +32,11 @@
     </property>
     <column>
      <property name="text">
+      <string>用户编号</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
       <string>用户名</string>
      </property>
     </column>
@@ -203,22 +208,6 @@
     <hint type="destinationlabel">
      <x>79</x>
      <y>210</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tbUser</sender>
-   <signal>doubleClicked(QModelIndex)</signal>
-   <receiver>btnEdit</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>140</x>
-     <y>80</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>132</x>
-     <y>216</y>
     </hint>
    </hints>
   </connection>
