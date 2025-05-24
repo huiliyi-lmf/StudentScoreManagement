@@ -7,10 +7,10 @@ bool Student::createTable() {
   "`id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
   "`stuName` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
   "`classID` int(11) NOT NULL,"
-  "`gradeID` int(11) NOT NULL,"
+  "`majorID` int(11) NOT NULL,"
   "`age` int(11) NOT NULL,"
   "`sex` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
-  "`nation` char(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
+  "`phoneNum` char(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
   "`address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
   "PRIMARY KEY (`id`) USING BTREE"
 ") ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;)");
@@ -19,14 +19,14 @@ bool Student::createTable() {
 bool Student::insert() {
     this->createTable();
     QSqlQuery query(*this->db);
-    query.prepare("INSERT INTO `student` (`id`, `stuName`, `classID`, `gradeID`, `age`, `sex`, `nation`, `address`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    query.prepare("INSERT INTO `student` (`id`, `stuName`, `classID`, `majorID`, `age`, `sex`, `phoneNum`, `address`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     query.addBindValue(id);
     query.addBindValue(STDTOQSTR(stuName));
     query.addBindValue(classID);
-    query.addBindValue(gradeID);
+    query.addBindValue(majorID);
     query.addBindValue(age);
     query.addBindValue(STDTOQSTR(sex));
-    query.addBindValue(STDTOQSTR(nation));
+    query.addBindValue(STDTOQSTR(phoneNum));
     query.addBindValue(STDTOQSTR(address));
     return query.exec();
 }
@@ -39,10 +39,10 @@ bool Student::selectById(int id) {
         this->id = query.value("id").toInt();
         stuName = query.value("StuName").toString().toStdString();
         classID = query.value("classID").toInt();
-        gradeID = query.value("gradeID").toInt();
+        majorID = query.value("majorID").toInt();
         age = query.value("age").toInt();
         sex = query.value("sex").toString().toStdString();
-        nation = query.value("nation").toString().toStdString();
+        phoneNum = query.value("phoneNum").toString().toStdString();
         address = query.value("address").toString().toStdString();
         return true; 
     } 
@@ -62,13 +62,13 @@ bool Student::deleteData() {
 bool Student::updateData() {
     this->createTable();
     QSqlQuery query(*this->db);
-    query.prepare(QString("UPDATE %1 SET `stuName` =?, `classID` =?, `gradeID` =?, `age` =?, `sex` =?, `nation` =?, `address` =? WHERE `id` =?").arg(STDTOQSTR(this->tableName)));
+    query.prepare(QString("UPDATE %1 SET `stuName` =?, `classID` =?, `majorID` =?, `age` =?, `sex` =?, `phoneNum` =?, `address` =? WHERE `id` =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(stuName));
     query.addBindValue(classID);
-    query.addBindValue(gradeID);
+    query.addBindValue(majorID);
     query.addBindValue(age);
     query.addBindValue(STDTOQSTR(sex));
-    query.addBindValue(STDTOQSTR(nation));
+    query.addBindValue(STDTOQSTR(phoneNum));
     query.addBindValue(STDTOQSTR(address));
     query.addBindValue(id);
     if(!query.exec()){
@@ -87,10 +87,10 @@ std::vector<DataObject*> Student::selectAll() {
         student->id = query.value("id").toInt();
         student->stuName = query.value("stuName").toString().toStdString();
         student->classID = query.value("classID").toInt();
-        student->gradeID = query.value("gradeID").toInt();
+        student->majorID = query.value("majorID").toInt();
         student->age = query.value("age").toInt();
         student->sex = query.value("sex").toString().toStdString();
-        student->nation = query.value("nation").toString().toStdString();
+        student->phoneNum = query.value("phoneNum").toString().toStdString();
         student->address = query.value("address").toString().toStdString();
         students.push_back(student); 
     }

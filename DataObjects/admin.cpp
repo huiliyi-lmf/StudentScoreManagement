@@ -51,7 +51,7 @@ bool Admin::deleteData() {
 bool Admin::updateData() {
     this->createTable();
     QSqlQuery query(*this->db);
-    query.prepare(QString("UPDATE %1 SET userName=?,usrPwd=? WHERE id=?").arg(STDTOQSTR(this->tableName)));
+    query.prepare(QString("UPDATE %1 SET userName=?,userPwd=? WHERE id=?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(this->userName));
     query.addBindValue(STDTOQSTR(this->userPwd));
     query.addBindValue(this->id);
