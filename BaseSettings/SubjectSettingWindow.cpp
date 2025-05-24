@@ -1,6 +1,12 @@
 #include "SubjectSettingWindow.h"
 #include "ui_SubjectSettingWindow.h"
-
+#include <QInputDialog>
+#include <QComboBox>
+#include <QDialog>
+#include <QVBoxLayout>
+#include <QDialogButtonBox>
+#include <QLineEdit>
+#include <QMessageBox>
 SubjectSettingWindow::SubjectSettingWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::SubjectSettingWindow), parentPointer(parent)
@@ -11,6 +17,8 @@ SubjectSettingWindow::SubjectSettingWindow(QWidget *parent)
     QObject::connect(this->ui->btnDel, &QPushButton::clicked, this, &SubjectSettingWindow::onDeleteBtnClicked);
     QObject::connect(this->ui->btnEdit, &QPushButton::clicked, this, &SubjectSettingWindow::onUpdateBtnClicked);
     QObject::connect(this->ui->btnExit, &QPushButton::clicked, this, &SubjectSettingWindow::onExitBtnClicked);
+    // 连接双击信号到新的槽函数
+    QObject::connect(ui->tbSubject, &QTableWidget::cellDoubleClicked, this, &SubjectSettingWindow::onTbSubjectItemDoubleClicked);
     loadMajorsToComboBox();
     loadSubjectsToTable();
 
@@ -176,4 +184,101 @@ void SubjectSettingWindow::loadSubjectsToTable(){
         delete dobj;
     }
     ui->tbSubject->resizeColumnsToContents();
+}
+void SubjectSettingWindow::onTbSubjectItemDoubleClicked(int row, int column) {
+    QTableWidgetItem* idItem = ui->tbSubject->item(row, 0); //学科ID在第0列
+    if (!idItem) {
+        QMessageBox::warning(this, "错误", "无法获取学科ID。");
+        return;
+    }
+    int subjectId = idItem->text().toInt();
+
+    Subject subjectToEdit;
+    if (!subjectToEdit.selectById(subjectId)) {
+        QMessageBox::warning(this, "错误", "无法加载要编辑的学科信息。");
+        return;
+    }
+
+    bool ok = false;
+    QString newValue;
+
+    if (column == 1) { // 专业列 (假设专业名称在第1列)
+        QDialog dialog(this);
+        dialog.setWindowTitle("选择专业");
+        QVBoxLayout* layout = new QVBoxLayout(&dialog);
+        QComboBox* comboBox = new QComboBox(&dialog);
+
+        // 填充专业下拉框
+        Major majorFetcher;
+        std::vector<DataObject*> majors = majorFetcher.selectAll();
+        if (majors.empty()) {
+            QMessageBox::warning(this, "警告", "没有可用的专业！");
+            for (DataObject* obj : majors) delete obj; // 清理内存
+            return;
+        }
+
+        int currentMajorIndex = -1;
+        for (size_t i = 0; i < majors.size(); ++i) {
+            Major* major = static_cast<Major*>(majors[i]);
+            if (major) {
+                comboBox->addItem(QString::fromStdString(major->majorName), QVariant(major->id));
+                if (major->id == subjectToEdit.majorId) {
+                    currentMajorIndex = i;
+                }
+            }
+        }
+        if (currentMajorIndex != -1) {
+            comboBox->setCurrentIndex(currentMajorIndex);
+        }
+
+        layout->addWidget(comboBox);
+        QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
+        connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+        connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+        layout->addWidget(buttonBox);
+
+        if (dialog.exec() == QDialog::Accepted) {
+            int newMajorId = comboBox->currentData().toInt();
+            if (newMajorId != subjectToEdit.majorId) {
+                 // 检查新专业下是否已有同名学科
+                if (subjectToEdit.isSubjectNameTakenInMajor(subjectToEdit.subName, newMajorId, subjectId)) {
+                    QMessageBox::warning(this, "警告", "学科名称 \"" + QString::fromStdString(subjectToEdit.subName) + "\" 在新选择的专业下已被使用。");
+                    for (DataObject* obj : majors) delete obj;
+                    return;
+                }
+                subjectToEdit.majorId = newMajorId;
+                if (subjectToEdit.updateData()) {
+                    loadSubjectsToTable(); // 重新加载表格以更新显示
+                    QMessageBox::information(this, "成功", "学科的专业更新成功！");
+                } else {
+                    QMessageBox::critical(this, "错误", "学科的专业更新失败！");
+                }
+            }
+        }
+        for (DataObject* obj : majors) delete obj; // 清理 majors 列表
+
+    } else if (column == 2) { // 学科名称列 (假设学科名称在第2列)
+        newValue = QInputDialog::getText(this, "编辑学科名称",
+                                       "请输入新的学科名称:", QLineEdit::Normal,
+                                       QString::fromStdString(subjectToEdit.subName), &ok);
+        if (ok && !newValue.isEmpty()) {
+            if (newValue.toStdString() != subjectToEdit.subName) {
+                if (subjectToEdit.isSubjectNameTakenInMajor(newValue.toStdString(), subjectToEdit.majorId, subjectId)) {
+                    QMessageBox::warning(this, "警告", "学科名称 \"" + newValue + "\" 在该专业下已被使用。");
+                    return;
+                }
+                subjectToEdit.subName = newValue.toStdString();
+                if (subjectToEdit.updateData()) {
+                    ui->tbSubject->item(row, column)->setText(newValue); // 直接更新单元格
+                    QMessageBox::information(this, "成功", "学科名称更新成功！");
+                } else {
+                    QMessageBox::critical(this, "错误", "学科名称更新失败！");
+                }
+            }
+        } else if (ok && newValue.isEmpty()) {
+            QMessageBox::warning(this, "警告", "学科名称不能为空！");
+        }
+    } else if (column == 0) { // ID 列
+        QMessageBox::information(this, "提示", "学科ID不可直接编辑。");
+    }
 }

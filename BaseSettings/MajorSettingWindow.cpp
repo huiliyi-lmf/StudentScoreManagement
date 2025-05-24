@@ -5,7 +5,12 @@
 #include <QSqlQuery>
 #include <QtSql>
 #include<vector>
-
+#include <QInputDialog>
+#include <QComboBox>
+#include <QVBoxLayout>
+#include <QDialogButtonBox>
+#include <QDialog>
+#include <QLineEdit>
 MajorSettingWindow::MajorSettingWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MajorSettingWindow), parentPointer(parent)
@@ -16,6 +21,7 @@ MajorSettingWindow::MajorSettingWindow(QWidget *parent)
     QObject::connect(this->ui->btnDel, &QPushButton::clicked, this, &MajorSettingWindow::onDeleteBtnClicked);
     QObject::connect(this->ui->btnEdit,&QPushButton::clicked, this, &MajorSettingWindow::onUpdateBtnClicked);
     QObject::connect(this->ui->btnExit,&QPushButton::clicked, this, &MajorSettingWindow::onExitBtnClicked);
+    connect(ui->tbSubject,&QTableWidget::cellDoubleClicked,this,&MajorSettingWindow::onTableItemDoubleClicked);
     loadMajorsToTable();
 }
 
@@ -145,4 +151,43 @@ void  MajorSettingWindow::loadMajorsToTable(){
         delete dobj;
     }
      ui->tbSubject->resizeColumnsToContents();
+}
+void MajorSettingWindow::onTableItemDoubleClicked(int row,int column){
+    QTableWidgetItem* idItem=ui->tbSubject->item(row,0);
+    if(!idItem)return;
+    int majorId=idItem->text().toInt();
+    Major majorToEdit;
+    if(!majorToEdit.selectById(majorId)){
+        QMessageBox::warning(this, "警告", "无法获取专业信息！");
+        return;
+    }
+    bool ok;
+    QString newValue;
+    switch(column){
+    case 0:
+        QMessageBox::information(this, "提示", "专业ID不可编辑");
+        break;
+    case 1:
+    {
+        newValue=QInputDialog::getText(this,"编辑专业名称","请输入新的专业名称",QLineEdit::Normal,ui->tbSubject->item(row,column)->text(),&ok);
+        if(ok&&!newValue.isEmpty()){
+            // 检查名称是否已被使用
+            if (majorToEdit.isNameTakenByOther(newValue.toStdString(), majorToEdit.id,this )) {
+                QMessageBox::warning(this, "警告", "专业名称 \"" + newValue + "\" 在该专业下已被使用，请输入不同的名称。");
+                return;
+            }
+            majorToEdit.majorName=newValue.toStdString();
+            if(majorToEdit.updateData()){
+                ui->tbSubject->item(row,column)->setText(newValue);
+                 QMessageBox::information(this, "成功", "专业名称更新成功！");
+            } else{
+                 QMessageBox::critical(this, "错误", "专业名称更新失败！");
+            }
+        }
+        break;
+    }
+    }
+
+
+
 }

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include"DataObjects/subject.h"
 #include<vector>
+
 namespace Ui {
 class SubjectSettingWindow;
 }
@@ -26,6 +27,7 @@ public slots:
     void onUpdateBtnClicked();
     void onDeleteBtnClicked();
     void onExitBtnClicked();
+    void onTbSubjectItemDoubleClicked(int row, int column); // 新增的槽函数
 };
 
 #endif // SUBJECTSETTINGWINDOW_H
