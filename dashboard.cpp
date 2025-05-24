@@ -19,7 +19,7 @@ DashBoard::DashBoard(QWidget *parent, std::string userName)
 
     QLabel* userInfo = new QLabel;
     tmpWidgetPointer.push_back(userInfo);
-    userInfo->setText(QString("当前登陆用户：%1").arg(userName));
+    userInfo->setText(QString("当前登陆用户：%1").arg(STDTOQSTR(userName)));
     ui->statusbar->addWidget(userInfo);
     QLabel* timeInfo = new QLabel;
     tmpWidgetPointer.push_back(timeInfo);
