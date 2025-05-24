@@ -190,32 +190,16 @@
   <connection>
    <sender>editName</sender>
    <signal>returnPressed()</signal>
-   <receiver>btnAdd</receiver>
-   <slot>click()</slot>
+   <receiver>editID</receiver>
+   <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>236</x>
      <y>179</y>
     </hint>
     <hint type="destinationlabel">
-     <x>75</x>
-     <y>212</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tbSubject</sender>
-   <signal>doubleClicked(QModelIndex)</signal>
-   <receiver>btnEdit</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>140</x>
-     <y>80</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>132</x>
-     <y>216</y>
+     <x>107</x>
+     <y>179</y>
     </hint>
    </hints>
   </connection>

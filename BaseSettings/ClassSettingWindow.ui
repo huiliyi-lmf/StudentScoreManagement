@@ -46,7 +46,7 @@
      </property>
     </column>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -88,13 +88,13 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>320</y>
-      <width>331</width>
-      <height>21</height>
+      <width>340</width>
+      <height>32</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -163,22 +163,6 @@
  </resources>
  <connections>
   <connection>
-   <sender>btnExit</sender>
-   <signal>clicked()</signal>
-   <receiver>ClassSettingWindow</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>279</x>
-     <y>252</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>307</x>
-     <y>246</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>editID</sender>
    <signal>returnPressed()</signal>
    <receiver>editName</receiver>
@@ -197,31 +181,31 @@
   <connection>
    <sender>editName</sender>
    <signal>returnPressed()</signal>
-   <receiver>btnAdd</receiver>
-   <slot>click()</slot>
+   <receiver>editID</receiver>
+   <slot>setFocus()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>274</x>
      <y>211</y>
     </hint>
     <hint type="destinationlabel">
-     <x>83</x>
-     <y>254</y>
+     <x>122</x>
+     <y>294</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>tbClass</sender>
-   <signal>doubleClicked(QModelIndex)</signal>
-   <receiver>btnEdit</receiver>
-   <slot>click()</slot>
+   <sender>btnExit</sender>
+   <signal>clicked()</signal>
+   <receiver>ClassSettingWindow</receiver>
+   <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>153</x>
-     <y>80</y>
+     <x>279</x>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
-     <x>157</x>
+     <x>307</x>
      <y>246</y>
     </hint>
    </hints>
