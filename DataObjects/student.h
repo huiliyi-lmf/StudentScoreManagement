@@ -19,6 +19,9 @@ public:
     bool deleteData() override;     //删除数据
     bool updateData() override;     //更新数据
     std::vector<DataObject*> selectAll() override;//查询所有数据
+    
+    // 获取指定专业的学生人数
+    int getStudentCountByMajorId(int majorId);
 };
 
 #endif // STUDENT_H

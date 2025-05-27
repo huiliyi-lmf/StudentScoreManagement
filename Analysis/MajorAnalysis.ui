@@ -17,8 +17,28 @@
    <iconset resource="../rc.qrc">
     <normaloff>:/ico/images/appstu.ICO</normaloff>:/ico/images/appstu.ICO</iconset>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QChartView" name="graphicsView">
+      <property name="minimumSize">
+       <size>
+        <width>780</width>
+        <height>580</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QChartView</class>
+   <extends>QGraphicsView</extends>
+   <header>qchartview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../rc.qrc"/>
  </resources>

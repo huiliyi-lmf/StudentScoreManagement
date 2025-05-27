@@ -79,3 +79,16 @@ std::vector<DataObject*> Student::selectAll() {
     
 }
 
+int Student::getStudentCountByMajorId(int majorId) {
+    this->createTable();
+    QSqlQuery query(*this->db);
+    query.prepare("SELECT COUNT(*) FROM student WHERE majorID = ?");
+    query.addBindValue(majorId);
+    
+    if (query.exec() && query.next()) {
+        return query.value(0).toInt();
+    }
+    
+    return 0; // 如果查询失败或没有结果，返回0
+}
+
