@@ -10,7 +10,7 @@ public:
     std::string className;
     int majorId;
     Class();
-    bool createTable() override;
+
     bool insert() override;
     bool selectById(int id) override;
     bool deleteData() override;

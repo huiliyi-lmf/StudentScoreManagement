@@ -1,19 +1,9 @@
 #include "class.h"
 
 Class::Class():DataObject("Class") {}
-bool Class::createTable() {
-    QSqlQuery query(*this->db);
-    // 使用 SQLite 兼容的建表语句
-    return query.exec("CREATE TABLE IF NOT EXISTS class (" // 注意表名 class 不是关键字，但为清晰可加引号 `class`
-                      "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," // id 作为自增主键
-                      "majorId INTEGER NOT NULL,"
-                      "className TEXT NOT NULL"
-                      ");");
 
-}
 
 bool Class::insert() {
-    this->createTable(); // Ensure table exists
     QSqlQuery query(*this->db);
     // Prepare statement with placeholders for SQLite compatibility and security
     query.prepare(QString("INSERT INTO %1 (majorId, className) VALUES (?, ?)")
@@ -31,7 +21,6 @@ bool Class::insert() {
 }
 
 bool Class::selectById(int id) {
-    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id); 
@@ -46,7 +35,6 @@ bool Class::selectById(int id) {
     }
 }
 bool Class::deleteData() {
-    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("DELETE FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
@@ -56,7 +44,6 @@ bool Class::deleteData() {
     return query.numRowsAffected() > 0;
 }
 bool Class::updateData() {
-    this->createTable(); // Ensure table exists, though ideally not needed for every update
     QSqlQuery query(*this->db);
     // Ensure column names match the SQLite table definition (e.g., majorId)
     query.prepare(QString("UPDATE %1 SET majorId = ?, className = ? WHERE id = ?")
@@ -73,7 +60,6 @@ bool Class::updateData() {
 }
 
 std::vector<DataObject*> Class::selectAll() {
-    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName))); 
     std::vector<DataObject*> result;
@@ -96,8 +82,6 @@ bool Class::isClassNameTakenInMajor(const std::string& classNameToCheck, int tar
         QMessageBox::critical(nullptr, "数据库错误", "数据库未连接，无法检查班级名称。");
         return true; // 保守起见，如果数据库不可用，则认为名称已被占用
     }
-
-    this->createTable(); // 确保表存在
 
     QString queryString = QString("SELECT COUNT(*) FROM %1 WHERE className = :className AND majorId = :majorId")
                               .arg(STDTOQSTR(this->tableName));

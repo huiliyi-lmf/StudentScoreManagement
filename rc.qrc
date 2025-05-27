@@ -1,9 +1,13 @@
 <RCC>
-  <qresource prefix="ico">
-    <file>images/appstu.ICO</file>
-  </qresource>
-  <qresource prefix="jpg">
-    <file>images/login.jpg</file>
-    <file>images/main.jpg</file>
-  </qresource>
+    <qresource prefix="/ico">
+        <file>images/appstu.ICO</file>
+    </qresource>
+    <qresource prefix="/jpg">
+        <file>images/login.jpg</file>
+        <file>images/main.jpg</file>
+    </qresource>
+    <qresource prefix="/db">
+        <file>data/init_student.db</file>
+        <file>data/init_student.sql</file>
+    </qresource>
 </RCC>

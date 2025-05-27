@@ -8,7 +8,7 @@ class Major:public DataObject
 public:
     std::string majorName;
     Major();
-    bool createTable() override;
+
     bool insert() override;
     bool selectById(int id) override;
     bool deleteData() override;

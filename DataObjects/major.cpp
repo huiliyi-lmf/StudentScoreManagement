@@ -2,15 +2,7 @@
 
 Major::Major(): DataObject("Major") {}
 
-bool Major::createTable() {
-    QSqlQuery query(*this->db) ;
-    return query.exec("CREATE TABLE IF NOT EXISTS major ("
-                          "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
-                         " majorName TEXT NOT NULL"
-                         ");");
-}
 bool Major::insert() {
-    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("INSERT INTO %1 (majorName) values (?)").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(this->majorName));
@@ -20,7 +12,6 @@ bool Major::insert() {
 }
 
 bool Major::selectById(int id) {
-    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id); 
@@ -34,7 +25,6 @@ bool Major::selectById(int id) {
     }
 }
 bool Major::deleteData() {
-    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("DELETE FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
@@ -44,7 +34,6 @@ bool Major::deleteData() {
     return query.numRowsAffected() > 0;
 }
 bool Major::updateData() {
-    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("UPDATE %1 SET majorName =? WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(majorName));
@@ -55,7 +44,6 @@ bool Major::updateData() {
     return query.numRowsAffected() > 0; 
 }
 std::vector<DataObject*> Major::selectAll() {
-    this->createTable();
     std::vector<DataObject*> majors;
     QSqlQuery query(*this->db);
     if(query.exec(QString("SELECT * FROM %1 ORDER BY id ASC").arg(STDTOQSTR(this->tableName)))) {

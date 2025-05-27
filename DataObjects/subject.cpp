@@ -1,17 +1,9 @@
 #include "subject.h"
 
 Subject::Subject():DataObject("Subject") {}
-bool Subject::createTable() 
-{
-    QSqlQuery query(*this->db);
-   return query.exec("CREATE TABLE IF NOT EXISTS subject ("
-  "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
-  "majorId INTEGER NOT NULL,"
-  "subName TEXT NOT NULL);");
-}
+
 bool Subject::insert() 
 {
-    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("INSERT INTO %1 (`majorId`, `subName`) VALUES (?,?)").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(majorId);
@@ -21,7 +13,6 @@ bool Subject::insert()
 
 bool Subject::selectById(int id)
 {
-    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1 WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
@@ -37,7 +28,6 @@ bool Subject::selectById(int id)
 }
 bool Subject::deleteData()
 {
-    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("DELETE FROM %1 WHERE id=?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
@@ -48,7 +38,6 @@ bool Subject::deleteData()
 }
 bool Subject::updateData()
 {
-    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("UPDATE %1 SET majorId=?,subName =? WHERE id =?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(majorId);
@@ -61,7 +50,6 @@ bool Subject::updateData()
 }
 std::vector<DataObject*> Subject::selectAll()
 {
-    this->createTable();
     std::vector<DataObject*> subjects;
     QSqlQuery query(*this->db);
     query.exec(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName)));
@@ -79,8 +67,6 @@ bool Subject::isSubjectNameTakenInMajor(const std::string& subjectNameToCheck, i
         QMessageBox::critical(nullptr, "数据库错误", "数据库未连接，无法检查班级名称。");
         return true; 
     }
-
-    this->createTable(); 
 
     QString queryString = QString("SELECT COUNT(*) FROM %1 WHERE subName = :subName AND majorId = :majorId")
                               .arg(STDTOQSTR(this->tableName));
