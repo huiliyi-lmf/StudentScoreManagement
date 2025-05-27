@@ -3,23 +3,22 @@
 Student::Student():DataObject("Student") {}
 bool Student::createTable() {
     QSqlQuery query(*this->db);
-    return query.exec("CREATE TABLE IF NOT EXISTS `student`  ("
-  "`id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
-  "`stuName` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
-  "`classID` int(11) NOT NULL,"
-  "`majorID` int(11) NOT NULL,"
-  "`age` int(11) NOT NULL,"
-  "`sex` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
-  "`phoneNum` char(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
-  "`address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
-  "PRIMARY KEY (`id`) USING BTREE"
-") ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;)");
+    return query.exec("CREATE TABLE IF NOT EXISTS student ("
+  "id TEXT PRIMARY KEY NOT NULL,"
+  "stuName TEXT NOT NULL,"
+  "classID INTEGER NOT NULL,"
+  "majorID INTEGER NOT NULL,"
+  "age INTEGER NOT NULL,"
+  "sex TEXT NOT NULL,"
+  "phoneNum TEXT NOT NULL,"
+  "address TEXT NOT NULL"
+");");
 
 }
 bool Student::insert() {
     this->createTable();
     QSqlQuery query(*this->db);
-    query.prepare("INSERT INTO `student` (`id`, `stuName`, `classID`, `majorID`, `age`, `sex`, `phoneNum`, `address`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    query.prepare("INSERT INTO student (id, stuName, classID, majorID, age, sex, phoneNum, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     query.addBindValue(id);
     query.addBindValue(STDTOQSTR(stuName));
     query.addBindValue(classID);
@@ -33,11 +32,11 @@ bool Student::insert() {
 bool Student::selectById(int id) {
     this->createTable();
     QSqlQuery query(*this->db);
-    query.prepare(QString("SELECT * FROM %1 WHERE `id` = ?").arg(STDTOQSTR(this->tableName)));
+    query.prepare(QString("SELECT * FROM %1 WHERE id = ?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
     if (query.exec() && query.next()) {
         this->id = query.value("id").toInt();
-        stuName = query.value("StuName").toString().toStdString();
+        stuName = query.value("stuName").toString().toStdString();
         classID = query.value("classID").toInt();
         majorID = query.value("majorID").toInt();
         age = query.value("age").toInt();
@@ -51,7 +50,7 @@ bool Student::selectById(int id) {
 bool Student::deleteData() {
     this->createTable();
     QSqlQuery query(*this->db);
-    query.prepare(QString("DELETE FROM %1 WHERE `id` =?").arg(STDTOQSTR(this->tableName)));
+    query.prepare(QString("DELETE FROM %1 WHERE id = ?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(id);
     if(!query.exec()){
         return false; 
@@ -62,7 +61,7 @@ bool Student::deleteData() {
 bool Student::updateData() {
     this->createTable();
     QSqlQuery query(*this->db);
-    query.prepare(QString("UPDATE %1 SET `stuName` =?, `classID` =?, `majorID` =?, `age` =?, `sex` =?, `phoneNum` =?, `address` =? WHERE `id` =?").arg(STDTOQSTR(this->tableName)));
+    query.prepare(QString("UPDATE %1 SET stuName = ?, classID = ?, majorID = ?, age = ?, sex = ?, phoneNum = ?, address = ? WHERE id = ?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(stuName));
     query.addBindValue(classID);
     query.addBindValue(majorID);

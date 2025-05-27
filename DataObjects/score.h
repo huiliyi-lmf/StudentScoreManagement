@@ -5,7 +5,7 @@
 class Score:public DataObject
 {
 public:
-    std::string stuId;
+    int stuId;
     int subId;
     double score;
     Score();

@@ -4,7 +4,7 @@
 #include"DataObjects/major.h"
 #include <QMainWindow>
 #include <QMessageBox>
-#include"DataObjects/class.h"
+
 namespace Ui {
 class ClassSettingWindow;
 }

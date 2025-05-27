@@ -4,20 +4,19 @@ Score::Score():DataObject("Score") {}
 
 bool Score::createTable() {
     QSqlQuery query(*this->db);
-    return query.exec("CREATE TABLE IF NOT EXISTS `score`  ("
-  "`id` int(11) NOT NULL,"
-  "`stuId` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,"
-  "`subId` int(11) NOT NULL,"
-  "`score` double NOT NULL,"
- " PRIMARY KEY (`id`) USING BTREE"
-") ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;)");
+    return query.exec("CREATE TABLE IF NOT EXISTS score ("
+  "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+  "stuId INTEGER NOT NULL,"
+  "subId INTEGER NOT NULL,"
+  "score REAL NOT NULL"
+");");
 
 }
 bool Score::insert() {
     this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("INSERT INTO %1 (stuId,subId,score) values(?,?,?)").arg(STDTOQSTR(this->tableName)));
-    query.addBindValue(STDTOQSTR(stuId)); 
+    query.addBindValue(stuId);
     query.addBindValue(subId); 
     query.addBindValue(score);
     return query.exec();
@@ -30,7 +29,7 @@ bool Score::selectById(int id) {
     query.addBindValue(id);
     if (query.exec() && query.next()) {
         this->id = query.value("id").toInt();
-        this->stuId = query.value("stuId").toString().toStdString(); 
+        this->stuId = query.value("stuId").toInt();
         this->subId = query.value("subId").toInt(); 
         this->score = query.value("score").toDouble();
         return true;
@@ -53,7 +52,7 @@ bool Score::updateData() {
     this->createTable();
     QSqlQuery query(*this->db);
     query.prepare(QString("UPDATE %1 SET stuId=?,subId=?,score=? WHERE id=?").arg(STDTOQSTR(this->tableName)));
-    query.addBindValue(STDTOQSTR(stuId)); 
+    query.addBindValue(stuId);
     query.addBindValue(subId); 
     query.addBindValue(score);
     query.addBindValue(id);
@@ -66,11 +65,11 @@ std::vector<DataObject*> Score::selectAll() {
     this->createTable();
     std::vector<DataObject*> scores;
     QSqlQuery query(*this->db);
-    query.prepare(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName))); 
+    query.exec(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName))); 
     while(query.next()) {
         Score* score = new Score();
         score->id = query.value("id").toInt();
-        score->stuId = query.value("stuId").toString().toStdString();
+        score->stuId = query.value("stuId").toInt();
         score->subId = query.value("subId").toInt();
         score->score = query.value("score").toDouble();
         scores.push_back(score);
