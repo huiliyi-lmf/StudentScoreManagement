@@ -80,7 +80,6 @@ std::vector<DataObject*> Student::selectAll() {
 }
 
 int Student::getStudentCountByMajorId(int majorId) {
-    this->createTable();
     QSqlQuery query(*this->db);
     query.prepare("SELECT COUNT(*) FROM student WHERE majorID = ?");
     query.addBindValue(majorId);
