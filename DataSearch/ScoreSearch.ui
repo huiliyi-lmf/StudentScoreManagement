@@ -101,6 +101,9 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="editName">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -113,9 +116,9 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>40</x>
       <y>10</y>
-      <width>151</width>
+      <width>101</width>
       <height>21</height>
      </rect>
     </property>
@@ -183,38 +186,6 @@
  </resources>
  <connections>
   <connection>
-   <sender>cboxMajor</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>btnQuery</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>434</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>674</x>
-     <y>18</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cboxSubject</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>btnQuery</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>591</x>
-     <y>19</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>674</x>
-     <y>18</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>editName</sender>
    <signal>returnPressed()</signal>
    <receiver>btnQuery</receiver>
@@ -227,6 +198,22 @@
     <hint type="destinationlabel">
      <x>674</x>
      <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnExit</sender>
+   <signal>clicked()</signal>
+   <receiver>ScoreSearch</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>734</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>380</x>
+     <y>171</y>
     </hint>
    </hints>
   </connection>

@@ -185,5 +185,21 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btnExit</sender>
+   <signal>clicked()</signal>
+   <receiver>StudentSearch</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>674</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>415</x>
+     <y>179</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>

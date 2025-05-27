@@ -27,7 +27,6 @@ private:
     QWidget* parent;
 public slots:
     void onSearchBtnClicked();
-    void onExitBthClicked();
     void onKeywordChanged();
 };
 

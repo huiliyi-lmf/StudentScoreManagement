@@ -8,7 +8,6 @@ StudentSearch::StudentSearch(QWidget *parent)
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose);
     QObject::connect(this->ui->btnQuery, &QPushButton::clicked, this, &StudentSearch::onSearchBtnClicked);
-    QObject::connect(this->ui->btnExit, &QPushButton::clicked, this, &StudentSearch::onExitBthClicked);
     QObject::connect(this->ui->editKey, &QLineEdit::textChanged, this, &StudentSearch::onKeywordChanged);
     
     // 初始化界面
@@ -21,10 +20,7 @@ StudentSearch::~StudentSearch()
     delete ui;
     parent->setEnabled(true);
 }
-void StudentSearch::onExitBthClicked(){
-    parent->setEnabled(true);
-    this->close();
-}
+
 void StudentSearch::onSearchBtnClicked(){
     QString searchCondition = ui->cboxCondition->currentText();
     QString keyword = ui->editKey->text().trimmed();

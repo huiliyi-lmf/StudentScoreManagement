@@ -30,7 +30,6 @@ private:
     QWidget* parent;
 public slots:
     void onSearchBtnClicked();
-    void onExitBtnClicked();
     void onMajorSelectionChanged();
 };
 

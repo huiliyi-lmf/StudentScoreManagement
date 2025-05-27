@@ -8,12 +8,10 @@ ScoreSearch::ScoreSearch(QWidget *parent)
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose);
     QObject::connect(this->ui->btnQuery, &QPushButton::clicked, this, &ScoreSearch::onSearchBtnClicked);
-    QObject::connect(this->ui->btnExit, &QPushButton::clicked, this, &ScoreSearch::onExitBtnClicked);
     QObject::connect(this->ui->cboxMajor, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ScoreSearch::onMajorSelectionChanged);
     loadScoreToTable();
     loadMajorToCombobox();
     loadSubToCombobox(); // 初始化时加载所有科目
-
 }
 
 ScoreSearch::~ScoreSearch()
@@ -21,10 +19,7 @@ ScoreSearch::~ScoreSearch()
     delete ui;
     parent->setEnabled(true);
 }
-void ScoreSearch::onExitBtnClicked(){
-    parent->setEnabled(true);
-    this->close();
-}
+
 void ScoreSearch::onSearchBtnClicked(){
     // 获取查询条件
     QString studentName = ui->editName->text().trimmed();
