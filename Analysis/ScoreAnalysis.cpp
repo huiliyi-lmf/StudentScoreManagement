@@ -73,9 +73,6 @@ void ScoreAnalysis::loadSubToCombobox(int majorId){
             }
         }
     }
-
-    ui->cboxSub->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-
     // 清理内存
     for(DataObject* dobj : allSubjects){
         delete dobj;
@@ -101,8 +98,6 @@ void ScoreAnalysis::loadSubToCombobox(){
         ui->cboxSub->addItem("暂无课程");
         ui->cboxSub->setEnabled(false);
     }
-
-    ui->cboxSub->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     for(DataObject* dobj : dataObjects){
         delete dobj;
     }
