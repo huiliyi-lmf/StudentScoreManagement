@@ -8,7 +8,16 @@ ScoreAnalysis::ScoreAnalysis(QWidget *parent)
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose);
     loadMajorToCombobox();
-    loadSubToCombobox();
+    loadSubToCombobox(ui->cboxMajor->currentData().toInt());
+
+    // 初始化图表
+    ui->cboxChart->addItem("直方图", QVariant("0"));
+    ui->cboxChart->addItem("扇形图", QVariant("1"));
+    ui->cboxChart->setCurrentIndex(0);
+    this->onChartChanged();
+    QObject::connect(ui->cboxChart, &QComboBox::currentIndexChanged, this, &ScoreAnalysis::onChartChanged);
+    QObject::connect(ui->cboxMajor, &QComboBox::currentIndexChanged, this, &ScoreAnalysis::onMajorChanged);
+    QObject::connect(ui->cboxSub, &QComboBox::currentIndexChanged, this, &ScoreAnalysis::onSubjectChanged);
 }
 
 ScoreAnalysis::~ScoreAnalysis()
@@ -25,7 +34,6 @@ void ScoreAnalysis::loadMajorToCombobox(){
         ui->cboxMajor->setEnabled(false);
     }else{
         ui->cboxMajor->setEnabled(true);
-        ui->cboxMajor->addItem("请选择专业...",QVariant(-1));
         for(DataObject* dobj:dataObjects){
             Major* currentMajor=static_cast<Major*>(dobj);
             if(currentMajor){
@@ -43,8 +51,6 @@ void ScoreAnalysis::loadSubToCombobox(int majorId){
     ui->cboxSub->clear();
 
     if(majorId <= 0){
-        // 如果传入的专业ID无效，加载所有科目
-        loadSubToCombobox();
         return;
     }
 
@@ -65,7 +71,6 @@ void ScoreAnalysis::loadSubToCombobox(int majorId){
         ui->cboxSub->setEnabled(false);
     }else{
         ui->cboxSub->setEnabled(true);
-        ui->cboxSub->addItem("请选择课程...", QVariant(-1));
         for(DataObject* dobj : filteredSubjects){
             Subject* currentSubject = static_cast<Subject*>(dobj);
             if(currentSubject){
@@ -78,27 +83,27 @@ void ScoreAnalysis::loadSubToCombobox(int majorId){
         delete dobj;
     }
 }
-void ScoreAnalysis::loadSubToCombobox(){
-    // 加载所有科目（当没有选择专业时）
-    ui->cboxSub->clear();
-    ui->cboxSub->addItem("所有课程", QVariant(-1));
 
-    Subject subjectFetcher;
-    std::vector<DataObject*> dataObjects = subjectFetcher.selectAll();
+void ScoreAnalysis::onChartChanged() {
+    if(ui->cboxChart->currentIndex()==0) {
+        // 读取直方图
 
-    if(!dataObjects.empty()){
-        ui->cboxSub->setEnabled(true);
-        for(DataObject* dobj : dataObjects){
-            Subject* currentSubject = static_cast<Subject*>(dobj);
-            if(currentSubject){
-                ui->cboxSub->addItem(QString::fromStdString(currentSubject->subName), QVariant(currentSubject->id));
-            }
-        }
-    }else{
-        ui->cboxSub->addItem("暂无课程");
-        ui->cboxSub->setEnabled(false);
+    } else {
+        // 读取扇形图
     }
-    for(DataObject* dobj : dataObjects){
-        delete dobj;
+}
+
+void ScoreAnalysis::onMajorChanged() {
+    if(ui->cboxMajor->currentData().toInt() <= 0) {
+        return;
     }
+    loadSubToCombobox(ui->cboxMajor->currentData().toInt());
+    this->onChartChanged();
+}
+
+void ScoreAnalysis::onSubjectChanged() {
+    if(ui->cboxSub->currentData().toInt() <= 0) {
+        return;
+    }
+    this->onChartChanged();
 }

@@ -5,6 +5,8 @@
 #include"DataObjects/dataobject.h"
 #include"DataObjects/major.h"
 #include"DataObjects/subject.h"
+#include <QtCharts>
+
 namespace Ui {
 class ScoreAnalysis;
 }
@@ -16,11 +18,12 @@ class ScoreAnalysis : public QMainWindow
 public:
     explicit ScoreAnalysis(QWidget *parent = nullptr);
     ~ScoreAnalysis();
-    void loadSubToCombobox();
     void loadMajorToCombobox();
     void loadSubToCombobox(int majorId);
-    void loadChartToCombobox();
-
+public slots:
+    void onChartChanged();
+    void onMajorChanged();
+    void onSubjectChanged();
 private:
     Ui::ScoreAnalysis *ui;
     QWidget* parent;
