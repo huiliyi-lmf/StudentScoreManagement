@@ -5,7 +5,7 @@
 
 #define PROJECT_TITLE "学生成绩管理系统"
 
-#define STDTOQSTR(str) (QString("%1").arg(str))
+#define STDTOQSTR(str) QString(std::string(str).c_str())
 
 #define WARN_MESSAGE(str) QMessageBox::warning(this, QString(PROJECT_TITLE)+QString(" | 警告"), str)
 
