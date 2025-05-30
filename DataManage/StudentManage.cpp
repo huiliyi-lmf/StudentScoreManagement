@@ -349,11 +349,11 @@ void StudentManage::onBtnQueryClicked() {
     int majorId = ui->cboxMajor->currentData().toInt();
     int classId = ui->cboxClass->currentData().toInt();
     QString stuId = ui->editID->text();
-    QString stuName = ui->editName->text();
+    QString stuName = ui->editName->text().trimmed();
     int age = ui->editAge->value();
     QString sex = ui->cboxSex->currentText();
-    QString phone = ui->editPhone->text();
-    QString address = ui->editAddress->text();
+    QString phone = ui->editPhone->text().trimmed();
+    QString address = ui->editAddress->text().trimmed();
     Student stuMapper;
     auto allStus = stuMapper.selectAll();
     auto selectStus(allStus);
@@ -363,9 +363,9 @@ void StudentManage::onBtnQueryClicked() {
         if(majorId > 0 && p->majorID != majorId) continue;
         if(classId > 0 && p->classID != classId) continue;
         if((stuId!="" && !QString("%1").arg(p->id).contains(stuId))) continue;
-        if((stuName!="" && !stuName.contains(STDTOQSTR(p->stuName))) || (address != "" && !address.contains(STDTOQSTR(p->address)))) continue;
+        if((stuName!="" && !STDTOQSTR(p->stuName).contains(stuName)) || (address != "" && !STDTOQSTR(p->address).contains(address))) continue;
         if(age > 0 && p->age != age) continue;
-        if((sex!=""&&!sex.contains(STDTOQSTR(p->sex))) || (phone!=""&&!phone.contains(STDTOQSTR(p->phoneNum)))) continue;
+        if((sex!=""&&!STDTOQSTR(p->sex).contains(sex)) || (phone!=""&&!STDTOQSTR(p->phoneNum).contains(phone))) continue;
         selectStus.push_back(pb);
     }
     this->loadStuToTable(selectStus);
