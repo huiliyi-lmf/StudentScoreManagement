@@ -8,13 +8,15 @@ ScoreManage::ScoreManage(QWidget *parent)
 {
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose);
-     QObject::connect(this->ui->cboxMajors, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ScoreManage::onMajorSelectionChanged);
-     QObject::connect(this->ui->cboxClass, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ScoreManage::onClassSelectionChanged);
-     QObject::connect(this->ui->btnAdd,&QPushButton::clicked,this,&ScoreManage::onbtnAddClicked);
-     QObject::connect(this->ui->btnDel,&QPushButton::clicked,this,&ScoreManage::onbtnDelClicked);
-     QObject::connect(this->ui->btnEdit,&QPushButton::clicked,this,&ScoreManage::onbtnEditClicked);
-     QObject::connect(this->ui->btnQuery,&QPushButton::clicked,this,&ScoreManage::onbtnQueryClicked);
-     loadMajorToCombobox();
+    QObject::connect(this->ui->cboxMajors, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ScoreManage::onMajorSelectionChanged);
+    QObject::connect(this->ui->cboxClass, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ScoreManage::onClassSelectionChanged);
+    QObject::connect(this->ui->btnAdd,&QPushButton::clicked,this,&ScoreManage::onbtnAddClicked);
+    QObject::connect(this->ui->btnDel,&QPushButton::clicked,this,&ScoreManage::onbtnDelClicked);
+    QObject::connect(this->ui->btnEdit,&QPushButton::clicked,this,&ScoreManage::onbtnEditClicked);
+    QObject::connect(this->ui->btnQuery,&QPushButton::clicked,this,&ScoreManage::onbtnQueryClicked);
+    // 连接表格双击事件
+    QObject::connect(this->ui->tbResult, &QTableWidget::cellDoubleClicked, this, &ScoreManage::onTableItemDoubleClicked);
+    loadMajorToCombobox();
     loadClassToCombobox();
     loadSubToCombobox();
     loadStuNameToCombobox();
@@ -137,8 +139,19 @@ void ScoreManage::onbtnEditClicked(){
         return;
     }
 
-    // 获取选中行的成绩ID（第6列）
-    QTableWidgetItem* scoreIdItem = ui->tbResult->item(currentRow, 5);
+    // 调用双击处理函数，并传入当前行和成绩列（第6列）
+    onTableItemDoubleClicked(currentRow, 6);
+}
+
+// 新增双击处理函数
+void ScoreManage::onTableItemDoubleClicked(int row, int column) {
+    // 只处理成绩列（第6列）的双击事件
+    if(column != 6) {
+        return;
+    }
+    
+    // 获取选中行的成绩ID（第5列）
+    QTableWidgetItem* scoreIdItem = ui->tbResult->item(row, 5);
     if(!scoreIdItem){
         QMessageBox::warning(this, "警告", "无法获取成绩ID");
         return;
@@ -151,9 +164,9 @@ void ScoreManage::onbtnEditClicked(){
     }
 
     // 获取学生姓名和课程名称用于显示确认信息
-    QString stuName = ui->tbResult->item(currentRow, 1)->text();
-    QString subName = ui->tbResult->item(currentRow, 4)->text();
-    QString currentScore = ui->tbResult->item(currentRow, 6)->text();
+    QString stuName = ui->tbResult->item(row, 1)->text();
+    QString subName = ui->tbResult->item(row, 4)->text();
+    QString currentScore = ui->tbResult->item(row, 6)->text();
 
     // 获取当前成绩记录信息
     Score score;
@@ -161,9 +174,6 @@ void ScoreManage::onbtnEditClicked(){
         QMessageBox::warning(this, "警告", "无法找到该成绩记录");
         return;
     }
-
-    // 设置编辑框的值为当前成绩
-    ui->editResult->setValue(score.score);
 
     // 创建一个对话框来确认新成绩
     bool ok;
@@ -186,7 +196,99 @@ void ScoreManage::onbtnEditClicked(){
     }
 }
 void ScoreManage::onbtnQueryClicked(){
-
+    // 获取选中的筛选条件
+    QVariant majorData = ui->cboxMajors->currentData();
+    QVariant classData = ui->cboxClass->currentData();
+    QVariant subjectData = ui->cboxSubjects->currentData();
+    QVariant studentData = ui->cboxStuName->currentData();
+    
+    // 检查是否有选择具体的专业、班级、科目和学生
+    // 只有当下拉框选择了具体项目（不是默认的"请选择..."或"所有..."项）时才作为筛选条件
+    int selectMajorId = (majorData.isValid() && majorData.toInt() > 0) ? majorData.toInt() : -1;
+    int selectClassId = (classData.isValid() && classData.toInt() > 0) ? classData.toInt() : -1;
+    int selectSubId = (subjectData.isValid() && subjectData.toInt() > 0) ? subjectData.toInt() : -1;
+    int selectStudentId = (studentData.isValid() && studentData.toInt() > 0) ? studentData.toInt() : -1;
+    
+    // 如果没有选择任何有效的筛选条件，显示所有记录
+    if(selectMajorId <= 0 && selectClassId <= 0 && selectSubId <= 0 && selectStudentId <= 0) {
+        loadScoreToTable();
+        return;
+    }
+    
+    // 获取所有成绩记录
+    Score scoreFetcher;
+    std::vector<DataObject*> allScores = scoreFetcher.selectAll();
+    std::vector<DataObject*> filteredScores;
+    
+    // 遍历所有成绩记录
+    for(DataObject* dobj : allScores) {
+        Score* score = static_cast<Score*>(dobj);
+        if(!score) {
+            continue;
+        }
+        
+        bool matchesConditions = true;
+        
+        // 如果选择了学生ID，直接根据学生ID筛选
+        if(selectStudentId > 0) {
+            if(score->stuId != selectStudentId) {
+                matchesConditions = false;
+            }
+        } else {
+            // 如果没有选择具体学生，但选择了专业，则根据专业筛选
+            if(selectMajorId > 0) {
+                Student student;
+                if(student.selectById(score->stuId)) {
+                    if(student.majorID != selectMajorId) {
+                        matchesConditions = false;
+                    }
+                } else {
+                    matchesConditions = false;
+                }
+            }
+            
+            // 如果没有选择具体学生，但选择了班级，则根据班级筛选
+            if(matchesConditions && selectClassId > 0) {
+                Student student;
+                if(student.selectById(score->stuId)) {
+                    if(student.classID != selectClassId) {
+                        matchesConditions = false;
+                    }
+                } else {
+                    matchesConditions = false;
+                }
+            }
+        }
+        
+        // 如果选择了科目，则根据科目筛选
+        if(matchesConditions && selectSubId > 0) {
+            if(score->subId != selectSubId) {
+                matchesConditions = false;
+            }
+        }
+        
+        // 如果符合所有条件，添加到筛选结果中
+        if(matchesConditions) {
+            Score* scoreCopy = new Score();
+            scoreCopy->id = score->id;
+            scoreCopy->stuId = score->stuId;
+            scoreCopy->subId = score->subId;
+            scoreCopy->score = score->score;
+            filteredScores.push_back(scoreCopy);
+        }
+    }
+    
+    // 更新表格显示
+    loadScoreToTable(filteredScores);
+    
+    // 清理内存
+    for(DataObject* dobj : allScores) {
+        delete dobj;
+    }
+    
+    for(DataObject* dobj : filteredScores) {
+        delete dobj;
+    }
 }
 void ScoreManage::loadMajorToCombobox(){
     ui->cboxMajors->clear();
@@ -469,6 +571,13 @@ void ScoreManage::updateStudentComboBox(){
     loadStuNameToCombobox(majorId, classId);
 }
 void ScoreManage::loadScoreToTable(const std::vector<DataObject*>& score){
+    ui->tbResult->horizontalHeader()->resizeSection(0, 100);
+    ui->tbResult->horizontalHeader()->resizeSection(1, 150);
+    ui->tbResult->horizontalHeader()->resizeSection(2, 150);
+    ui->tbResult->horizontalHeader()->resizeSection(3, 150);
+    ui->tbResult->horizontalHeader()->resizeSection(4, 150);
+    ui->tbResult->horizontalHeader()->resizeSection(5, 150);
+    ui->tbResult->horizontalHeader()->resizeSection(6, 150);
     ui->tbResult->setColumnCount(7);
     ui->tbResult->setRowCount(0);
     ui->tbResult->setRowCount(score.size());
@@ -509,3 +618,4 @@ void ScoreManage::loadScoreToTable(){
         delete dobj;
     }
 }
+

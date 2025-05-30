@@ -131,7 +131,7 @@ void SubjectSettingWindow::onDeleteBtnClicked() {
         loadSubjectsToTable();
     }
     else{
-        QMessageBox::critical(this, "错误", "删除失败");
+        QMessageBox::warning(this, "警告", "该课程下存在学生成绩，无法删除");
     }
 }
 void SubjectSettingWindow::onExitBtnClicked(){

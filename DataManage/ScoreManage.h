@@ -44,6 +44,7 @@ public slots:
     void onbtnDelClicked();
     void onbtnEditClicked();
     void onbtnQueryClicked();
+    void onTableItemDoubleClicked(int row, int column);
 };
 
 #endif // SCOREMANAGE_H

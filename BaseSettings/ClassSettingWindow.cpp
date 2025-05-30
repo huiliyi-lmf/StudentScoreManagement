@@ -140,7 +140,7 @@ void ClassSettingWindow::onDeleteBtnClicked() {
         loadClassToTable();
     }
     else{
-        QMessageBox::critical(this, "错误", "删除失败");
+        QMessageBox::warning(this, "警告", "存在学生与该班级id映射，请将该班级所有学生转移后再进行删除");
     }
 }
 void ClassSettingWindow::loadMajorsToComboBox(){
