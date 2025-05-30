@@ -7,6 +7,8 @@
 #include "DataObjects/major.h"
 #include "DataObjects/class.h"
 #include <vector>
+#include <QInputDialog>
+#include <QStringList>
 
 namespace Ui {
 class StudentManage;

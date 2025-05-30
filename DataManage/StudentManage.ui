@@ -439,5 +439,117 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cboxClass</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>btnQuery</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>615</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>785</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editAddress</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>btnQuery</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>901</x>
+     <y>392</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>785</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editAge</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>btnQuery</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>879</x>
+     <y>360</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>785</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editID</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>btnQuery</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>576</x>
+     <y>362</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>785</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editName</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>btnQuery</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>746</x>
+     <y>362</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>785</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editPhone</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>btnQuery</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>601</x>
+     <y>392</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>785</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cboxSex</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>btnQuery</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1016</x>
+     <y>363</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>785</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>
