@@ -2,9 +2,10 @@
 #define SCOREANALYSIS_H
 
 #include <QMainWindow>
-#include"DataObjects/dataobject.h"
-#include"DataObjects/major.h"
-#include"DataObjects/subject.h"
+#include "DataObjects/dataobject.h"
+#include "DataObjects/major.h"
+#include "DataObjects/subject.h"
+#include "DataObjects/score.h"
 #include <QtCharts>
 
 namespace Ui {
@@ -27,6 +28,9 @@ public slots:
 private:
     Ui::ScoreAnalysis *ui;
     QWidget* parent;
+    QWidget* lastChartView;
+    QChartView* createHistogramChart(const std::vector<double>& data, int binCount);
+    QChartView* createScoreDistributionPieChart(const std::vector<double>& scores);
 };
 
 #endif // SCOREANALYSIS_H
