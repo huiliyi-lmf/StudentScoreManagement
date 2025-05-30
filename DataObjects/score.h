@@ -15,6 +15,7 @@ public:
     bool deleteData() override;     //删除数据
     bool updateData() override;     //更新数据
     std::vector<DataObject*> selectAll() override;//查询所有数据
+    bool isScoreExits(QWidget* parent);
 };
 
 #endif // SCORE_H

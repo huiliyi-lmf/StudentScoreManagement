@@ -142,7 +142,7 @@
    <widget class="QTableWidget" name="tbResult">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>40</y>
       <width>1051</width>
       <height>301</height>

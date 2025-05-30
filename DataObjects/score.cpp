@@ -1,5 +1,5 @@
 #include "score.h"
-
+#include<QMessageBox>
 Score::Score():DataObject("Score") {}
 
 bool Score::insert() {
@@ -61,4 +61,24 @@ std::vector<DataObject*> Score::selectAll() {
     }
     return scores;
 }
-
+bool Score::isScoreExits(QWidget* parent){
+    // 检查stuId和subId是否有效
+    if(stuId <= 0 || subId <= 0) {
+        return false;
+    }
+    
+    QSqlQuery query(*this->db);
+    query.prepare(QString("SELECT COUNT(*) FROM %1 WHERE stuId = ? AND subId = ?").arg(STDTOQSTR(this->tableName)));
+    query.addBindValue(stuId);
+    query.addBindValue(subId);
+    
+    if(query.exec() && query.next()) {
+        int count = query.value(0).toInt();
+        if (count > 0) {
+            QMessageBox::warning(parent, "警告", "该科目已经有成绩！");
+            return true;
+        }
+    }
+    
+    return false; // 查询失败或没有找到记录
+}
