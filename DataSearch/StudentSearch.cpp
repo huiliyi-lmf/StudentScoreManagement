@@ -7,6 +7,7 @@ StudentSearch::StudentSearch(QWidget *parent)
 {
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose);
+    this->ui->btnQuery->hide();
     QObject::connect(this->ui->btnQuery, &QPushButton::clicked, this, &StudentSearch::onSearchBtnClicked);
     QObject::connect(this->ui->editKey, &QLineEdit::textChanged, this, &StudentSearch::onKeywordChanged);
     
@@ -30,7 +31,7 @@ void StudentSearch::onSearchBtnClicked(){
     
     // 检查数据库是否有学生数据
     if(allStudents.empty()){
-        QMessageBox::information(this, "提示", "数据库中暂无学生信息！");
+        // QMessageBox::information(this, "提示", "数据库中暂无学生信息！");
         this->setWindowTitle("学生信息查询 - 数据库为空");
         // 清空表格
         ui->tbStudent->setRowCount(0);
@@ -106,7 +107,7 @@ void StudentSearch::onSearchBtnClicked(){
         QString message = QString("未找到%1包含 \"%2\" 的学生信息！\n\n请检查：\n1. 输入的关键字是否正确\n2. 选择的查询条件是否正确\n3. 该学生是否已录入系统")
                          .arg(searchType).arg(keyword);
         
-        QMessageBox::information(this, "查询结果", message);
+        // QMessageBox::information(this, "查询结果", message);
         resultInfo = QString("查无结果 - 关键字：%1").arg(keyword);
         this->setWindowTitle("学生信息查询 - " + resultInfo);
     }
@@ -129,7 +130,7 @@ void StudentSearch::onSearchBtnClicked(){
                 QString successMessage = QString("找到学生：%1 (编号：%2)")
                                        .arg(QString::fromStdString(foundStudent->stuName))
                                        .arg(foundStudent->id);
-                QMessageBox::information(this, "查询成功", successMessage);
+                // QMessageBox::information(this, "查询成功", successMessage);
             }
         }
         else if(filteredStudents.size() <= 5){
@@ -144,7 +145,7 @@ void StudentSearch::onSearchBtnClicked(){
             QString successMessage = QString("找到 %1 名学生：\n%2")
                                    .arg(filteredStudents.size())
                                    .arg(studentNames.join("、"));
-            QMessageBox::information(this, "查询成功", successMessage);
+            // QMessageBox::information(this, "查询成功", successMessage);
         }
     }
     

@@ -7,6 +7,7 @@ ScoreManage::ScoreManage(QWidget *parent)
     , ui(new Ui::ScoreManage), parent(parent)
 {
     ui->setupUi(this);
+    this->ui->btnQuery->hide();
     this->setAttribute(Qt::WA_DeleteOnClose);
     QObject::connect(this->ui->cboxMajors, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ScoreManage::onMajorSelectionChanged);
     QObject::connect(this->ui->cboxClass, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ScoreManage::onClassSelectionChanged);

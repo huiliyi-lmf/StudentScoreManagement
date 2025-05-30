@@ -7,7 +7,7 @@ StudentManage::StudentManage(QWidget *parent)
 {
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose);
-
+    this->ui->btnQuery->hide();
     QObject::connect(this->ui->cboxMajor, &QComboBox::currentIndexChanged, this, &StudentManage::onMajorChanged);
     QBUTTON_CONNECT_MYCREATE(this->ui->btnAdd, &StudentManage::onBtnAddClicked);
     QBUTTON_CONNECT_MYCREATE(this->ui->btnDel, &StudentManage::onBtnDelClicked);

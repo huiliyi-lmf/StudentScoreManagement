@@ -7,6 +7,7 @@ ScoreSearch::ScoreSearch(QWidget *parent)
 {
     ui->setupUi(this);
     this->setAttribute(Qt::WA_DeleteOnClose);
+    this->ui->btnQuery->hide();
     QObject::connect(this->ui->btnQuery, &QPushButton::clicked, this, &ScoreSearch::onSearchBtnClicked);
     QObject::connect(this->ui->cboxMajor, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &ScoreSearch::onMajorSelectionChanged);
     loadScoreToTable();
@@ -106,7 +107,7 @@ void ScoreSearch::onSearchBtnClicked(){
             QString subjectName = (selectedSubjectId > 0) ? ui->cboxSubject->currentText() : "所有课程";
             message = QString("未找到专业 \"%1\"、课程 \"%2\" 的学生成绩记录！").arg(majorName).arg(subjectName);
         }
-        QMessageBox::information(this, "查询结果", message);
+        // QMessageBox::information(this, "查询结果", message);
     }
     
     // 清理内存

@@ -187,7 +187,7 @@
  <connections>
   <connection>
    <sender>editName</sender>
-   <signal>returnPressed()</signal>
+   <signal>textChanged(QString)</signal>
    <receiver>btnQuery</receiver>
    <slot>click()</slot>
    <hints>
@@ -214,6 +214,38 @@
     <hint type="destinationlabel">
      <x>380</x>
      <y>171</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cboxMajor</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>btnQuery</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>114</x>
+     <y>50</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>645</x>
+     <y>15</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cboxSubject</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>btnQuery</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>334</x>
+     <y>50</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>645</x>
+     <y>15</y>
     </hint>
    </hints>
   </connection>

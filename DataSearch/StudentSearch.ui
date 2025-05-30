@@ -201,5 +201,37 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cboxCondition</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>btnQuery</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>328</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>615</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editKey</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>btnQuery</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>544</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>615</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>
