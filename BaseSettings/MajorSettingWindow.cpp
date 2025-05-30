@@ -124,7 +124,7 @@ void MajorSettingWindow::onDeleteBtnClicked() {
         loadMajorsToTable();
     }
     else{
-         QMessageBox::critical(this, "错误", "删除失败");
+         QMessageBox::warning(this, "警告", "该专业存在学生与班级映射，请将班级和学生转移后再进行删除");
     }
 }
 void MajorSettingWindow::onExitBtnClicked(){

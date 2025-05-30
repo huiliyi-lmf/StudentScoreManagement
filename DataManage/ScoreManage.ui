@@ -142,7 +142,7 @@
    <widget class="QTableWidget" name="tbResult">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>0</x>
       <y>40</y>
       <width>1051</width>
       <height>301</height>
@@ -304,70 +304,6 @@
     </hint>
     <hint type="destinationlabel">
      <x>766</x>
-     <y>18</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tbResult</sender>
-   <signal>doubleClicked(QModelIndex)</signal>
-   <receiver>btnEdit</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>380</x>
-     <y>190</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>615</x>
-     <y>18</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cboxSubjects</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>btnQuery</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>424</x>
-     <y>19</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>495</x>
-     <y>18</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cboxMajors</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>btnQuery</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>114</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>495</x>
-     <y>18</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cboxStuName</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>btnQuery</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>414</x>
-     <y>363</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>495</x>
      <y>18</y>
     </hint>
    </hints>
