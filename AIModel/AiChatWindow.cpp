@@ -6,6 +6,7 @@ AiChatWindow::AiChatWindow(QWidget *parent)
     , ui(new Ui::AiChatWindow)
 {
     ui->setupUi(this);
+    QBUTTON_CONNECT_MYCREATE(ui->sendBtn, &AiChatWindow::onUserBtnClicked);
 }
 
 AiChatWindow::~AiChatWindow()
@@ -13,6 +14,15 @@ AiChatWindow::~AiChatWindow()
     delete ui;
 }
 
-void AiChatWindow::sendData(QPlainTextEdit* edit) {
+void AiChatWindow::sendData() {
+    QString userInput = ui->userEdit->toPlainText();
+    ui->showEdit->appendPlainText("用户输入：" + userInput + "\nAI回答：");
+    std::vector<QWidget*>* widgets = new std::vector<QWidget*>();
+    widgets->push_back(ui->userEdit);
+    widgets->push_back(ui->sendBtn);
+    this->sendAndFlush(ui->showEdit, QString("%1/chat").arg(this->serverUrl), userInput, widgets);
+}
 
+void AiChatWindow::onUserBtnClicked() {
+    this->sendData();
 }

@@ -15,9 +15,11 @@ class AiChatWindow : public AIBaseWindow
 public:
     explicit AiChatWindow(QWidget *parent = nullptr);
     ~AiChatWindow();
-    void sendData(QPlainTextEdit* edit) override;
+    void sendData() override;
 private:
     Ui::AiChatWindow *ui;
+public slots:
+    void onUserBtnClicked();
 };
 
 #endif // AICHATWINDOW_H

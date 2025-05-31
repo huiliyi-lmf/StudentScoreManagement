@@ -13,6 +13,8 @@
 #include <QNetworkReply>
 #include <QEventLoop>
 #include <QTimer>
+#include <QUuid>
+#include <QVector>
 
 class AIBaseWindow : public QMainWindow
 {
@@ -20,7 +22,7 @@ class AIBaseWindow : public QMainWindow
 public:
     explicit AIBaseWindow(QWidget *parent = nullptr, std::string prompt="");
     ~AIBaseWindow();
-    virtual void sendData(QPlainTextEdit* edit)=0;
+    virtual void sendData()=0;
 protected:
     const std::string AI_PROMPT;
     std::string serverUrl;
@@ -31,8 +33,10 @@ protected:
     bool isTokenVaild();
     bool isServerAvaliable();
     void checkAndSetServer();
+    void sendAndFlush(QPlainTextEdit* edit, QString baseUrl, QString query, std::vector<QWidget*>* disableWidget);
 private:
     QWidget* parent;
+    QByteArray sseBuffer;
 };
 
 #endif // AIBASEWINDOW_H
