@@ -10,7 +10,9 @@ AiScoreWindow::AiScoreWindow(QWidget *parent)
     loadSubToCombobox(ui->cboxMajor->currentData().toInt());
     QObject::connect(ui->cboxSub, &QComboBox::currentTextChanged, this, &AiScoreWindow::onSubjectChanged);
     QObject::connect(ui->cboxMajor, &QComboBox::currentTextChanged, this, &AiScoreWindow::onMajorChanged);
+    isMajorChanging = false;
     onSubjectChanged();
+    QBUTTON_CONNECT_MYCREATE(ui->queryBtn, [this](){this->sendData();});
 }
 
 AiScoreWindow::~AiScoreWindow()
@@ -45,6 +47,7 @@ void AiScoreWindow::sendData() {
     auto widgets = new std::vector<QWidget*>;
     widgets->push_back(ui->cboxMajor);
     widgets->push_back(ui->cboxSub);
+    widgets->push_back(ui->queryBtn);
     this->sendAndFlush(ui->showEdit, QString("%1/chat/analysis").arg(STDTOQSTR(serverUrl)), query, widgets);
 }
 
@@ -109,7 +112,6 @@ void AiScoreWindow::loadSubToCombobox(int majorId){
 
 void AiScoreWindow::onSubjectChanged() {
     if(isMajorChanging) return;
-    this->sendData();
 }
 
 void AiScoreWindow::onMajorChanged() {
