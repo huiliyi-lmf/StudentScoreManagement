@@ -1,7 +1,7 @@
 #include "AIBaseWindow.h"
 
 AIBaseWindow::AIBaseWindow(QWidget *parent, std::string prompt)
-    : QMainWindow{parent}, AI_PROMPT(prompt), serverUrl("http://localhost:18082"),
+    : QMainWindow{parent}, AI_PROMPT(prompt), serverUrl("https://cpp.vlsmb.top"),
     chartId(QUuid::createUuid().toString(QUuid::Id128).toStdString()), manager(new QNetworkAccessManager)
     , parent(parent)
 {
