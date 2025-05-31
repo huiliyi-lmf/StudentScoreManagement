@@ -1,6 +1,7 @@
 QT       += core gui
 QT       += sql
 QT       += charts
+QT       += network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
@@ -10,6 +11,9 @@ INCLUDEPATH += $$PWD/DataObjects
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    AIModel/AIBaseWindow.cpp \
+    AIModel/AiChatWindow.cpp \
+    AIModel/AiScoreWindow.cpp \
     Analysis/MajorAnalysis.cpp \
     Analysis/ScoreAnalysis.cpp \
     BaseSettings/AdminWindow.cpp \
@@ -33,6 +37,9 @@ SOURCES += \
     registerwindow.cpp
 
 HEADERS += \
+    AIModel/AIBaseWindow.h \
+    AIModel/AiChatWindow.h \
+    AIModel/AiScoreWindow.h \
     Analysis/MajorAnalysis.h \
     Analysis/ScoreAnalysis.h \
     BaseSettings/AdminWindow.h \
@@ -56,6 +63,8 @@ HEADERS += \
     registerwindow.h
 
 FORMS += \
+    AIModel/AiChatWindow.ui \
+    AIModel/AiScoreWindow.ui \
     Analysis/MajorAnalysis.ui \
     Analysis/ScoreAnalysis.ui \
     BaseSettings/AdminWindow.ui \

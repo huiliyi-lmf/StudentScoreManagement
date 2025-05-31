@@ -16,6 +16,8 @@ DashBoard::DashBoard(QWidget *parent, std::string userName)
     QACTION_CONNECT_MYCREATE(this->ui->studentDataAction, &DashBoard::openStudentManage);
     QACTION_CONNECT_MYCREATE(this->ui->scoreSearchAction, &DashBoard::openScoreSearch);
     QACTION_CONNECT_MYCREATE(this->ui->studentSearchAction, &DashBoard::openStudentSearch);
+    QACTION_CONNECT_MYCREATE(this->ui->aiChatAction, &DashBoard::openAiChat);
+    QACTION_CONNECT_MYCREATE(this->ui->aiScoreAction, &DashBoard::openAiScore);
 
     QLabel* userInfo = new QLabel;
     tmpWidgetPointer.push_back(userInfo);
@@ -61,3 +63,5 @@ GENERATE_CREATE_SUBWIN_SLOT_IMPL(DashBoard::openScoreManage, ScoreManage);
 GENERATE_CREATE_SUBWIN_SLOT_IMPL(DashBoard::openStudentManage, StudentManage);
 GENERATE_CREATE_SUBWIN_SLOT_IMPL(DashBoard::openScoreSearch, ScoreSearch);
 GENERATE_CREATE_SUBWIN_SLOT_IMPL(DashBoard::openStudentSearch, StudentSearch);
+GENERATE_CREATE_SUBWIN_SLOT_IMPL(DashBoard::openAiScore, AiScoreWindow);
+GENERATE_CREATE_SUBWIN_SLOT_IMPL(DashBoard::openAiChat, AiChatWindow);

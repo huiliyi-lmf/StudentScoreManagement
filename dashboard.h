@@ -17,6 +17,8 @@
 #include "DataManage/StudentManage.h"
 #include "DataSearch/ScoreSearch.h"
 #include "DataSearch/StudentSearch.h"
+#include "AIModel/AiChatWindow.h"
+#include "AIModel/AiScoreWindow.h"
 
 namespace Ui {
 class DashBoard;
@@ -47,6 +49,8 @@ public slots:
     void openStudentManage();
     void openScoreSearch();
     void openStudentSearch();
+    void openAiChat();
+    void openAiScore();
 };
 
 #endif // DASHBOARD_H
