@@ -20,7 +20,7 @@ void AiChatWindow::sendData() {
     std::vector<QWidget*>* widgets = new std::vector<QWidget*>();
     widgets->push_back(ui->userEdit);
     widgets->push_back(ui->sendBtn);
-    this->sendAndFlush(ui->showEdit, QString("%1/chat").arg(this->serverUrl), userInput, widgets);
+    this->sendAndFlush(ui->showEdit, QString("%1/chat").arg(QString::fromStdString(this->serverUrl)), userInput, widgets);
 }
 
 void AiChatWindow::onUserBtnClicked() {

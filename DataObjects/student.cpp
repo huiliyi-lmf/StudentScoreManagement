@@ -4,8 +4,7 @@ Student::Student():DataObject("Student") {}
 
 bool Student::insert() {
     QSqlQuery query(*this->db);
-    query.prepare("INSERT INTO student (id, stuName, classID, majorID, age, sex, phoneNum, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    query.addBindValue(id);
+    query.prepare("INSERT INTO student (stuName, classID, majorID, age, sex, phoneNum, address) VALUES (?, ?, ?, ?, ?, ?, ?)");
     query.addBindValue(STDTOQSTR(stuName));
     query.addBindValue(classID);
     query.addBindValue(majorID);
@@ -15,6 +14,7 @@ bool Student::insert() {
     query.addBindValue(STDTOQSTR(address));
     return query.exec();
 }
+
 bool Student::selectById(int id) {
     QSqlQuery query(*this->db);
     query.prepare(QString("SELECT * FROM %1 WHERE id = ?").arg(STDTOQSTR(this->tableName)));
@@ -32,6 +32,7 @@ bool Student::selectById(int id) {
     } 
     return false;
 }
+
 bool Student::deleteData() {
     QSqlQuery query(*this->db);
     query.prepare(QString("DELETE FROM %1 WHERE id = ?").arg(STDTOQSTR(this->tableName)));
@@ -40,8 +41,8 @@ bool Student::deleteData() {
         return false; 
     }
     return query.numRowsAffected() > 0;
-
 }
+
 bool Student::updateData() {
     QSqlQuery query(*this->db);
     query.prepare(QString("UPDATE %1 SET stuName = ?, classID = ?, majorID = ?, age = ?, sex = ?, phoneNum = ?, address = ? WHERE id = ?").arg(STDTOQSTR(this->tableName)));
@@ -57,8 +58,8 @@ bool Student::updateData() {
         return false;
     }
     return query.numRowsAffected() > 0;
-
 }
+
 std::vector<DataObject*> Student::selectAll() {
     QSqlQuery query(*this->db);
      query.exec(QString("SELECT * FROM %1").arg(STDTOQSTR(this->tableName)));

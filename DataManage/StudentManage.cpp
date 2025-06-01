@@ -202,13 +202,18 @@ void StudentManage::onBtnEditClicked() {
     }
 
     if(keyName == "stuName" || keyName == "address" || keyName == "phoneNum") {
-        value = QInputDialog::getText(this, inputTitle, inputLabel, QLineEdit::Normal, ui->tbStudent->currentItem()->text());
-        if(value == "") {
+        bool ok;
+        value = QInputDialog::getText(this, inputTitle, inputLabel, QLineEdit::Normal, ui->tbStudent->currentItem()->text(), &ok);
+        if(!ok || value == "") {
             return;
         }
         if(keyName == "stuName") stuMapper.stuName = value.toStdString();
-        else if(keyName == "address") stuMapper.stuName = value.toStdString();
+        else if(keyName == "address") stuMapper.address = value.toStdString();
         else stuMapper.phoneNum = value.toStdString();
+        if(!stuMapper.updateData()) {
+            ERROR_MESSAGE("修改失败，数据库错误！");
+            return;
+        }
     } else if(keyName == "majorId") {
         QStringList sl;
         for(int idx = 1; idx < ui->cboxMajor->count(); idx++) {
@@ -222,7 +227,7 @@ void StudentManage::onBtnEditClicked() {
             }
         }
         value = QInputDialog::getItem(this, inputTitle, inputLabel, sl, curIdx, false);
-        if(value == ui->tbStudent->currentItem()->text()) {
+        if(value == ui->tbStudent->currentItem()->text() || value.isEmpty()) {
             return;
         }
         Major majorMapper;
@@ -260,7 +265,7 @@ void StudentManage::onBtnEditClicked() {
             }
         }
         value = QInputDialog::getItem(this, inputTitle, inputLabel, sl, curIdx, false);
-        if(value == ui->tbStudent->currentItem()->text()) {
+        if(value == ui->tbStudent->currentItem()->text() || value.isEmpty()) {
             return;
         }
         Class classMapper;
@@ -289,7 +294,7 @@ void StudentManage::onBtnEditClicked() {
         QStringList sl;
         sl << "男" << "女";
         value = QInputDialog::getItem(this, inputTitle, inputLabel, sl, ui->tbStudent->currentItem()->text() == "男" ?0:1, false);
-        if(value == ui->tbStudent->currentItem()->text()) {
+        if(value == ui->tbStudent->currentItem()->text() || value.isEmpty()) {
             return;
         }
         stuMapper.sex = value.toStdString();
@@ -298,7 +303,12 @@ void StudentManage::onBtnEditClicked() {
             return;
         }
     } else if(keyName == "age") {
-        stuMapper.age = QInputDialog::getInt(this, inputTitle, inputLabel, ui->tbStudent->currentItem()->text().toInt());
+        bool ok;
+        int newAge = QInputDialog::getInt(this, inputTitle, inputLabel, ui->tbStudent->currentItem()->text().toInt(), 0, 150, 1, &ok);
+        if(!ok) {
+            return;
+        }
+        stuMapper.age = newAge;
         if(!stuMapper.updateData()) {
             ERROR_MESSAGE("修改失败，数据库错误！");
             return;
