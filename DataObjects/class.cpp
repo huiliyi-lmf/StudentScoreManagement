@@ -1,6 +1,6 @@
 #include "class.h"
 
-Class::Class():DataObject("Class") {}
+Class::Class():DataObject("class") {}
 
 
 bool Class::insert() {

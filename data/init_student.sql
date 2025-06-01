@@ -9,7 +9,7 @@ create table admin
 create table major
 (
     id        INTEGER not null
-        primary key,
+        primary key autoincrement,
     majorName TEXT    not null
 );
 
@@ -26,8 +26,8 @@ create table class
 
 create table student
 (
-    id       TEXT    not null
-        primary key,
+    id       INTEGER not null
+        primary key autoincrement,
     stuName  TEXT    not null,
     classID  INTEGER not null
         constraint fk_classId
@@ -68,5 +68,4 @@ create table score
             on update restrict on delete restrict,
     score REAL    not null
 );
-
 

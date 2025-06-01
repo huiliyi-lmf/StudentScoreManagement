@@ -1,6 +1,6 @@
 #include "subject.h"
 
-Subject::Subject():DataObject("Subject") {}
+Subject::Subject():DataObject("subject") {}
 
 bool Subject::insert() 
 {

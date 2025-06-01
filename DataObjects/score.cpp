@@ -1,6 +1,6 @@
 #include "score.h"
 #include<QMessageBox>
-Score::Score():DataObject("Score") {}
+Score::Score():DataObject("score") {}
 
 bool Score::insert() {
     QSqlQuery query(*this->db);

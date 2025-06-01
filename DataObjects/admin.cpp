@@ -1,6 +1,6 @@
 #include "admin.h"
 
-Admin::Admin() : DataObject("Admin") {
+Admin::Admin() : DataObject("admin") {
 
 }
 

@@ -1,10 +1,11 @@
 #include "student.h"
+#include <QSqlError>
 
-Student::Student():DataObject("Student") {}
+Student::Student():DataObject("student") {}
 
 bool Student::insert() {
     QSqlQuery query(*this->db);
-    query.prepare("INSERT INTO student (stuName, classID, majorID, age, sex, phoneNum, address) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    query.prepare(QString("INSERT INTO %1 (stuName, classID, majorID, age, sex, phoneNum, address) VALUES (?, ?, ?, ?, ?, ?, ?)").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(STDTOQSTR(stuName));
     query.addBindValue(classID);
     query.addBindValue(majorID);
@@ -12,7 +13,11 @@ bool Student::insert() {
     query.addBindValue(STDTOQSTR(sex));
     query.addBindValue(STDTOQSTR(phoneNum));
     query.addBindValue(STDTOQSTR(address));
-    return query.exec();
+    if(!query.exec()) {
+        qDebug() << "DataBase Error: " << query.lastError();
+        return false;
+    }
+    return true;
 }
 
 bool Student::selectById(int id) {
@@ -82,7 +87,7 @@ std::vector<DataObject*> Student::selectAll() {
 
 int Student::getStudentCountByMajorId(int majorId) {
     QSqlQuery query(*this->db);
-    query.prepare("SELECT COUNT(*) FROM student WHERE majorID = ?");
+    query.prepare(QString("SELECT COUNT(*) FROM %1 WHERE majorID = ?").arg(STDTOQSTR(this->tableName)));
     query.addBindValue(majorId);
     
     if (query.exec() && query.next()) {

@@ -1,6 +1,6 @@
 #include "major.h"
 
-Major::Major(): DataObject("Major") {}
+Major::Major(): DataObject("major") {}
 
 bool Major::insert() {
     QSqlQuery query(*this->db);
