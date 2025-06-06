@@ -352,6 +352,20 @@ void StudentManage::onBtnAddClicked() {
         ERROR_MESSAGE("添加失败！数据库错误！");
     } else {
         SUCCESS_MESSAGE("添加成功！");
+        
+        // 清空所有输入框，恢复默认状态
+        ui->editName->clear();
+        ui->editAge->setValue(0);
+        ui->editAddress->clear();
+        ui->editPhone->clear();
+        
+        // 恢复下拉框默认选择
+        ui->cboxMajor->setCurrentIndex(0);
+        ui->cboxClass->setCurrentIndex(0);
+        ui->cboxSex->setCurrentIndex(0);
+        
+        // 刷新表格显示最新数据
+        this->loadStuToTable();
     }
 }
 
